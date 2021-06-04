@@ -32,6 +32,7 @@ class _ListerState extends State<Lister> {
               return PageView.builder(
                   itemCount: 3,
                   controller: mainPageViewController,
+                  onPageChanged: (int page) => setState(() {}),
                   itemBuilder: (BuildContext context, int page) {
                     switch (page) {
                       case 0:

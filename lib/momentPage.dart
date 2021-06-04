@@ -16,19 +16,12 @@ class MomentPage extends StatelessWidget {
               ListerController.getTitle(ListerController.momentList[position]);
           return Dismissible(
               onDismissed: (direction) {
-                //DismissDirection.startToEnd
                 if (direction == DismissDirection.startToEnd) {
                   ListerController.move(
-                      position: position,
-                      id: ListerController.momentList[position],
-                      status: 0,
-                      lastStatus: 1);
+                      position: position, status: 0, lastStatus: 1);
                 } else {
                   ListerController.move(
-                      position: position,
-                      id: ListerController.momentList[position],
-                      status: 2,
-                      lastStatus: 1);
+                      position: position, status: 2, lastStatus: 1);
                 }
               },
               key: Key(title),

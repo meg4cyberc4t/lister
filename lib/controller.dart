@@ -35,36 +35,43 @@ class ListerController {
 
   static void move({
     required int position,
-    required int id,
     required int status,
     required int lastStatus,
   }) {
-    listInfo[id]['status'] = status;
-    switch (lastStatus) {
-      case 0:
-        deferredList.removeAt(position);
-        break;
-      case 1:
-        momentList.removeAt(position);
-        break;
-      case 2:
-        completedList.removeAt(position);
-        break;
+    try {
+      listInfo[ListerController.momentList[position]]['status'] = status;
+      switch (lastStatus) {
+        case 0:
+          deferredList.remove(deferredList[position]);
+          break;
+        case 1:
+          momentList.remove(momentList[position]);
+          break;
+        case 2:
+          completedList.remove(completedList[position]);
+          break;
+      }
+      switch (status) {
+        case 0:
+          deferredList.add(deferredList[position]);
+          break;
+        case 1:
+          momentList.add(momentList[position]);
+          break;
+        case 2:
+          completedList.add(completedList[position]);
+          break;
+      }
+      storage.put('deferredList', deferredList);
+      storage.put('momentList', momentList);
+      storage.put('completedList', completedList);
+    } on RangeError catch (_) {
+      move(
+        position: position-1,
+        status: status,
+        lastStatus: lastStatus,
+      );
     }
-    switch (status) {
-      case 0:
-        deferredList.add(id);
-        break;
-      case 1:
-        momentList.add(id);
-        break;
-      case 2:
-        completedList.add(id);
-        break;
-    }
-    storage.put('deferredList', deferredList);
-    storage.put('momentList', momentList);
-    storage.put('completedList', completedList);
   }
 
   static void setInfo(int id, int time, int status, String title) {
