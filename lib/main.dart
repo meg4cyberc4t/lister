@@ -29,22 +29,7 @@ class _ListerState extends State<Lister> {
             if (snapshot.hasError) {
               return ErrorIndicator(snapshot: snapshot);
             } else if (snapshot.hasData) {
-              return PageView.builder(
-                  itemCount: 3,
-                  controller: mainPageViewController,
-                  onPageChanged: (int page) => setState(() {}),
-                  itemBuilder: (BuildContext context, int page) {
-                    switch (page) {
-                      case 0:
-                        return Text('Отложенные');
-                      case 1:
-                        return MomentPage();
-                      case 2:
-                        return Text('Сделанные');
-                      default:
-                        return Text('Страница не найдена');
-                    }
-                  });
+              return MomentPage();
             } else {
               return LoadingIndicator();
             }
@@ -79,11 +64,7 @@ class _ListerState extends State<Lister> {
                           child: TextField(
                             onSubmitted: (String text) {
                               if (text.isNotEmpty) {
-                                ListerController.add(
-                                  status: 1,
-                                  title: text,
-                                  time: DateTime.now().millisecondsSinceEpoch,
-                                );
+                                ListerController.add(title: text);
                                 super.setState(() {});
                                 Navigator.of(context).pop(false);
                               }
@@ -104,23 +85,20 @@ class _ListerState extends State<Lister> {
                             onPressed: () {
                               if (controller.text.isNotEmpty) {
                                 ListerController.add(
-                                  status: 1,
                                   title: controller.text,
-                                  time: DateTime.now().millisecondsSinceEpoch,
                                 );
-
                                 super.setState(() {});
                                 Navigator.of(context).pop(false);
                               }
                             },
                             onLongPress: () {
                               if (controller.text.isNotEmpty) {
-                                ListerController.add(
-                                  status: 1,
-                                  title: controller.text,
-                                  time: DateTime.now().millisecondsSinceEpoch,
-                                );
-
+                                for (var i = 0; i < 100; i++) {
+                                  ListerController.add(
+                                    title: i.toString(),
+                                    // title: controller.text,
+                                  );
+                                }
                                 super.setState(() {});
                                 Navigator.of(context).pop(false);
                               }

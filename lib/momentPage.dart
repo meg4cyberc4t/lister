@@ -1,4 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart'
+    show
+        IconSlideAction,
+        Slidable,
+        SlidableController,
+        SlidableDismissal,
+        SlidableDrawerDismissal,
+        SlidableStrechActionPane,
+        SlideActionType;
 import 'package:lister/controller.dart';
 
 class MomentPage extends StatelessWidget {
@@ -6,41 +15,58 @@ class MomentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      child: ListView.builder(
-        itemCount: ListerController.momentList.length,
-        itemBuilder: (BuildContext context, int position) {
-          String title =
-              ListerController.getTitle(ListerController.momentList[position]);
-          return Dismissible(
-              onDismissed: (direction) {
-                if (direction == DismissDirection.startToEnd) {
-                  ListerController.move(
-                      position: position, status: 0, lastStatus: 1);
-                } else {
-                  ListerController.move(
-                      position: position, status: 2, lastStatus: 1);
-                }
-              },
-              key: Key(title),
-              background: Container(color: Colors.red),
-              secondaryBackground: Container(color: Colors.green),
-              child: MaterialButton(
-                onPressed: () {},
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      title,
-                      style: TextStyle(fontSize: 25),
-                    ),
-                  ),
-                ),
-              ));
-        },
-      ),
+    return ListView.builder(
+      itemCount: ListerController.mainList.length,
+      itemBuilder: (BuildContext context, int position) {
+        SlidableController _slidableController = SlidableController();
+        return Slidable(
+          key: Key(position.toString()),
+          direction: Axis.horizontal,
+          controller: _slidableController,
+          closeOnScroll: true,
+          dismissal: SlidableDismissal(
+            child: SlidableDrawerDismissal(),
+            closeOnCanceled: true,
+            onDismissed: (dir) {
+              print(_slidableController.onSlideAnimationChanged);
+              print(_slidableController.onSlideIsOpenChanged);
+            },
+            dismissThresholds: {
+              SlideActionType.secondary: 0.2,
+              SlideActionType.primary: 0.2,
+            },
+            resizeDuration: Duration(milliseconds: 500),
+          ),
+          actionPane: SlidableStrechActionPane(),
+          actionExtentRatio: 0,
+          actions: [
+            IconSlideAction(
+              caption: 'Check',
+              foregroundColor: Colors.white,
+              color: Colors.green[400],
+              iconWidget: Icon(
+                Icons.check,
+                color: Colors.white,
+              ),
+            )
+          ],
+          secondaryActions: [
+            IconSlideAction(
+              caption: 'Delete',
+              color: Colors.red,
+              foregroundColor: Colors.white,
+              icon: Icons.delete,
+            )
+          ],
+          child: ListTile(
+            title: Text(position.toString()),
+            subtitle: Text('subtitle'),
+            dense: true,
+            leading: Icon(Icons.navigate_next_rounded),
+            trailing: Icon(Icons.navigate_before_rounded),
+          ),
+        );
+      },
     );
   }
 }
