@@ -11,13 +11,17 @@ class ListerController {
     return 0;
   }
 
-  static void add({required String? title}) {
-    mainList.add(title);
+  static void add(String title) {
+    ListerController.mainList.add(title);
     storage.put('mainList', mainList);
   }
 
-  static void del({required String? title}) {
-    mainList.remove(title);
+  static void remove(String title) {
+    ListerController.mainList.remove(title);
     storage.put('mainList', mainList);
   }
+
+  static String getter(position) => mainList[position];
+
+  static int get length => mainList.length;
 }
