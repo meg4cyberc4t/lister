@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -6,6 +7,7 @@ import 'package:lister/LoadingIndicator.dart';
 import 'package:lister/controller.dart';
 import 'package:lister/momentPage.dart';
 import 'package:lister/variables.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -19,10 +21,40 @@ class Lister extends StatefulWidget {
 
 class _ListerState extends State<Lister> {
   PageController mainPageViewController = PageController(initialPage: 1);
+  PersistentTabController _persistentTabController =
+      PersistentTabController(initialIndex: 0);
+
+  List<Widget> _buildScreens() {
+    return [MomentPage(), LoadingIndicator()];
+  }
+
+  List<PersistentBottomNavBarItem> _navBarsItems() {
+    return [
+      PersistentBottomNavBarItem(
+        icon: Icon(CupertinoIcons.home),
+        title: ("Home"),
+        activeColorPrimary: CupertinoColors.activeBlue,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(CupertinoIcons.settings),
+        title: ("Settings"),
+        activeColorPrimary: CupertinoColors.activeBlue,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: PersistentTabView(
+        context,
+        controller: _persistentTabController,
+        screens: _buildScreens(),
+        items: _navBarsItems(),
+        confineInSafeArea: true,
+      ),
       body: FutureBuilder(
           future: ListerController.initialize(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {

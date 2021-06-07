@@ -1,13 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart'
-    show
-        IconSlideAction,
-        Slidable,
-        SlidableController,
-        SlidableDismissal,
-        SlidableDrawerDismissal,
-        SlidableStrechActionPane,
-        SlideActionType;
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lister/controller.dart';
 
 class MomentPage extends StatelessWidget {
@@ -27,10 +19,7 @@ class MomentPage extends StatelessWidget {
           dismissal: SlidableDismissal(
             child: SlidableDrawerDismissal(),
             closeOnCanceled: true,
-            onDismissed: (dir) {
-              print(_slidableController.onSlideAnimationChanged);
-              print(_slidableController.onSlideIsOpenChanged);
-            },
+            // onDismissed: (actionType) {},
             dismissThresholds: {
               SlideActionType.secondary: 0.2,
               SlideActionType.primary: 0.2,
