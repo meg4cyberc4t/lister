@@ -54,54 +54,54 @@ class TableToDo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Slidable(
-        key: Key(title),
-        direction: Axis.horizontal,
-        controller: _slidableController,
-        closeOnScroll: true,
-        dismissal: SlidableDismissal(
-          child: SlidableDrawerDismissal(),
-          onDismissed: (actionType) {
-            ListerController.remove(title);
-
-            // if (actionType!.index == 1) {
-            //   //налево
-            // } else if (actionType.index == 0) {
-            //   // направо
-            // }
-          },
-          dismissThresholds: {
-            SlideActionType.secondary: 0.2,
-            SlideActionType.primary: 0.2,
-          },
-          resizeDuration: Duration(milliseconds: 500),
-        ),
-        actionPane: SlidableStrechActionPane(),
-        actionExtentRatio: 0,
-        actions: [
-          IconSlideAction(
-            caption: 'Check',
-            foregroundColor: Colors.white,
-            color: Colors.green[400],
-            iconWidget: Icon(
-              Icons.check,
-              color: Colors.white,
-            ),
-          )
-        ],
-        secondaryActions: [
-          IconSlideAction(
-            caption: 'Delete',
-            color: Colors.red,
-            foregroundColor: Colors.white,
-            icon: Icons.delete,
-          )
-        ],
-        child: Container(
-          color: Colors.white,
-          height: 50,
-          child: Center(
-            child: Text(title),
+      key: Key(title),
+      direction: Axis.horizontal,
+      controller: _slidableController,
+      closeOnScroll: true,
+      dismissal: SlidableDismissal(
+        child: SlidableDrawerDismissal(),
+        onDismissed: (actionType) {
+          if (actionType!.index == 1) {
+            ListerController.deletedToDoCounterAdd();
+          } else if (actionType.index == 0) {
+            ListerController.doneToDoCounterAdd();
+          }
+          ListerController.remove(title);
+        },
+        dismissThresholds: {
+          SlideActionType.secondary: 0.2,
+          SlideActionType.primary: 0.2,
+        },
+        resizeDuration: Duration(milliseconds: 500),
+      ),
+      actionPane: SlidableStrechActionPane(),
+      actionExtentRatio: 0,
+      actions: [
+        IconSlideAction(
+          caption: 'Check',
+          foregroundColor: Colors.white,
+          color: Colors.green[400],
+          iconWidget: Icon(
+            Icons.check,
+            color: Colors.white,
           ),
-        ));
+        )
+      ],
+      secondaryActions: [
+        IconSlideAction(
+          caption: 'Delete',
+          color: Colors.red,
+          foregroundColor: Colors.white,
+          icon: Icons.delete,
+        )
+      ],
+      child: Container(
+        color: Colors.white,
+        height: 50,
+        child: Center(
+          child: Text(title),
+        ),
+      ),
+    );
   }
 }
