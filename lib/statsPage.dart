@@ -32,32 +32,65 @@ class _StatsPageState extends State<StatsPage> {
           backgroundColor: activeColorPrimary,
           onPressed: () => setState(() {}),
           label: Text('Обновить')),
-      body: Center(
-        child: PieChart(
-          dataMap: {
-            'Сделанные - ${ListerController.doneToDoCounter}':
-                ListerController.doneToDoCounter.toDouble(),
-            'Удалённые - ${ListerController.deletedToDoCounter}':
-                ListerController.deletedToDoCounter.toDouble(),
-            'В данный момент - ${ListerController.length}':
-                ListerController.length.toDouble(),
-          },
-          animationDuration: Duration(seconds: 1),
-          centerText: 'Задачи',
-          chartRadius: MediaQuery.of(context).size.width / 1.5,
-          initialAngleInDegree: 0,
-          legendOptions: LegendOptions(
-            showLegendsInRow: false,
-            legendPosition: LegendPosition.bottom,
-            legendShape: BoxShape.circle,
-            legendTextStyle: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          chartValuesOptions: ChartValuesOptions(
-            showChartValueBackground: true,
-            showChartValues: true,
-            showChartValuesInPercentage: true,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 30),
+              PieChart(
+                dataMap: {
+                  'Сделанные - ${ListerController.doneToDoCounter}':
+                      ListerController.doneToDoCounter.toDouble(),
+                  'Удалённые - ${ListerController.deletedToDoCounter}':
+                      ListerController.deletedToDoCounter.toDouble(),
+                  'В данный момент - ${ListerController.length}':
+                      ListerController.length.toDouble(),
+                },
+                animationDuration: Duration(seconds: 1),
+                centerText: 'Задачи',
+                chartRadius: (MediaQuery.of(context).size.width < 500)
+                    ? MediaQuery.of(context).size.width / 1.3
+                    : 500 / 1.3,
+                initialAngleInDegree: 0,
+                legendOptions: LegendOptions(
+                  showLegendsInRow: false,
+                  legendPosition: LegendPosition.bottom,
+                  legendShape: BoxShape.circle,
+                  legendTextStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                colorList: [
+                  colorDones,
+                  colorDeletes,
+                  colorMoments,
+                ],
+                chartValuesOptions: ChartValuesOptions(
+                  showChartValueBackground: true,
+                  showChartValues: true,
+                  showChartValuesInPercentage: true,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Всего задач:',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                (ListerController.doneToDoCounter +
+                        ListerController.deletedToDoCounter +
+                        ListerController.length)
+                    .toString(),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 30),
+            ],
           ),
         ),
       ),
