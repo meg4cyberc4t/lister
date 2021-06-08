@@ -12,7 +12,16 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 void main() async {
   await Hive.initFlutter();
   await ListerController.initialize();
-  runApp(MaterialApp(debugShowCheckedModeBanner: false, home: Lister()));
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: fontFamily,
+        scaffoldBackgroundColor: backgroundColor,
+      ),
+      home: Lister(),
+    ),
+  );
 }
 
 class Lister extends StatefulWidget {
@@ -29,19 +38,19 @@ class _ListerState extends State<Lister> {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.query_stats),
         title: 'Статистика',
-        activeColorPrimary: activeColorPrimary,
+        activeColorPrimary: inactiveColorPrimary,
         inactiveColorPrimary: inactiveColorPrimary,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.home),
         title: 'Задачи',
-        activeColorPrimary: activeColorPrimary,
+        activeColorPrimary: inactiveColorPrimary,
         inactiveColorPrimary: inactiveColorPrimary,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.settings),
         title: 'Настройки',
-        activeColorPrimary: activeColorPrimary,
+        activeColorPrimary: inactiveColorPrimary,
         inactiveColorPrimary: inactiveColorPrimary,
       ),
     ];
@@ -53,6 +62,7 @@ class _ListerState extends State<Lister> {
       body: PersistentTabView(
         context,
         controller: _persistentTabController,
+        backgroundColor: activeColorPrimary,
         screens: [
           StatsPage(),
           HomePage(),

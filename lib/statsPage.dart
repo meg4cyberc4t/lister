@@ -12,18 +12,15 @@ class StatsPage extends StatefulWidget {
 }
 
 class _StatsPageState extends State<StatsPage> {
-  // final data = [
-  //   {
-  //     ListerController.doneToDoCounter,
-  //     ListerController.deletedToDoCounter,
-  //   }
-  // ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text('Статистика'),
+        title: Text(
+          'Статистика',
+          style: TextStyle(fontSize: appBarTextTitleSize),
+        ),
         backgroundColor: activeColorPrimary,
         centerTitle: true,
       ),
@@ -50,16 +47,16 @@ class _StatsPageState extends State<StatsPage> {
                 },
                 animationDuration: Duration(seconds: 1),
                 centerText: 'Задачи',
-                chartRadius: (MediaQuery.of(context).size.width < 500)
+                chartRadius: (MediaQuery.of(context).size.width < 400)
                     ? MediaQuery.of(context).size.width / 1.3
-                    : 500 / 1.3,
+                    : 400 / 1.3,
                 initialAngleInDegree: 0,
                 legendOptions: LegendOptions(
                   showLegendsInRow: false,
                   legendPosition: LegendPosition.bottom,
                   legendShape: BoxShape.circle,
                   legendTextStyle: TextStyle(
-                    fontWeight: FontWeight.bold,
+                    color: setTextColor,
                   ),
                 ),
                 colorList: [
@@ -77,7 +74,7 @@ class _StatsPageState extends State<StatsPage> {
               Text(
                 'Всего задач:',
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                  color: setTextColor,
                 ),
               ),
               Text(
@@ -86,7 +83,7 @@ class _StatsPageState extends State<StatsPage> {
                         ListerController.length)
                     .toString(),
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                  color: setTextColor,
                 ),
               ),
               SizedBox(height: 30),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:lister/Dialogs/createDialog.dart';
 import 'package:lister/controller.dart';
 import 'package:lister/variables.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,7 +17,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Задачи'),
+        title: Text(
+          'Задачи',
+          style: TextStyle(fontSize: appBarTextTitleSize),
+        ),
         centerTitle: true,
         backgroundColor: activeColorPrimary,
       ),
@@ -24,12 +28,15 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton.extended(
           backgroundColor: activeColorPrimary,
           onPressed: () {
-            ListerController.add('title' + DateTime.now().toString());
-            setState(() {});
+            createAdderDialog(context, setState);
           },
           label: Text('Создать')),
       body: ListView.builder(
         itemCount: ListerController.length,
+        // separatorBuilder: (context, index) => Divider(
+        //   height: 1,
+        //   color: Color(0xFF212121),
+        // ),
         itemBuilder: (BuildContext context, int position) {
           return TableToDo(
             position: position,
@@ -42,13 +49,8 @@ class _HomePageState extends State<HomePage> {
 }
 
 class TableToDo extends StatelessWidget {
-  TableToDo({
-    this.position,
-    this.title,
-    Key? key,
-  }) : super(key: key);
-  final position;
-  final title;
+  TableToDo({this.position, this.title, Key? key}) : super(key: key);
+  final position, title;
   final SlidableController _slidableController = SlidableController();
 
   @override
@@ -95,12 +97,31 @@ class TableToDo extends StatelessWidget {
           icon: Icons.delete,
         )
       ],
-      child: Container(
-        color: Colors.white,
-        height: 50,
-        child: Center(
-          child: Text(title),
-        ),
+      child: Column(
+        children: [
+          Container(
+            color: backgroundColor,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  title,
+                  textDirection: TextDirection.ltr,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: setTextColor,
+                      fontSize: MediaQuery.of(context).size.width < 400
+                          ? MediaQuery.of(context).size.width / 16
+                          : 400 / 16),
+                ),
+              ),
+            ),
+          ),
+          Divider(
+            height: 1,
+            color: Color(0xFF212121),
+          ),
+        ],
       ),
     );
   }
