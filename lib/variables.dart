@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 const ToDoDatabaseName = "ToDo";
 const DatabasesPath = "../.AppData/lister";
@@ -28,3 +29,12 @@ const fontFamily = 'Montserrat';
 
 const appBarTextTitleSize = 30.0;
 const OutlinedButtonTextSize = 25.0;
+
+ThemeData mainTheme = ThemeData(
+  fontFamily: fontFamily,
+  scaffoldBackgroundColor: backgroundColor,
+  accentColor: activeColorPrimary,
+);
+
+SystemUiOverlayStyle mySystemTheme =
+    SystemUiOverlayStyle.light.copyWith(systemNavigationBarColor: Colors.black);

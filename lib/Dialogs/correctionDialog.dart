@@ -1,24 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:lister/components/MyTextField.dart';
 import 'package:lister/controller.dart';
 import 'package:lister/variables.dart';
 
-Future<dynamic> createAdderDialog(BuildContext context, setState) {
+Future<dynamic> correctionDialog({
+  required BuildContext context,
+  required Function setState,
+}) {
   return showDialog(
       context: context,
       builder: (context) {
-        TextEditingController _textEditingController = TextEditingController();
-        Function submitFunction = () {
-          String text = _textEditingController.text.trim();
-          if (text.isNotEmpty) {
-            ListerController.add(text);
-            setState(() {});
-            Navigator.of(context).pop(false);
-          } else {
-            // SnackBar(content: Snack)
-            _textEditingController.text = '';
-          }
-        };
         return Dialog(
             child: Container(
           padding: EdgeInsets.all(2),
@@ -28,17 +18,12 @@ Future<dynamic> createAdderDialog(BuildContext context, setState) {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Создание',
+                Text('Отчистить историю?',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: appBarTextTitleSize,
                       color: setTextColor,
                     )),
-                SizedBox(height: 10),
-                MyTextField(
-                  labeltext: 'Название задачи',
-                  textEditingController: _textEditingController,
-                  onSubmitted: submitFunction,
-                ),
                 SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -52,14 +37,17 @@ Future<dynamic> createAdderDialog(BuildContext context, setState) {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
-                        child: Text('Назад',
+                        child: Text('Нет',
                             style: TextStyle(
                                 fontSize: OutlinedButtonTextSize,
                                 color: setTextColor)),
                       ),
                     ),
                     OutlinedButton(
-                      onPressed: () => submitFunction(),
+                      onPressed: () {
+                        setState(() => ListerController.clearStats());
+                        Navigator.of(context).pop(false);
+                      },
                       style: ButtonStyle(
                         alignment: Alignment.center,
                         overlayColor: MaterialStateProperty.all<Color>(
@@ -67,7 +55,7 @@ Future<dynamic> createAdderDialog(BuildContext context, setState) {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
-                        child: Text('Далее',
+                        child: Text('Да',
                             style: TextStyle(
                                 fontSize: OutlinedButtonTextSize,
                                 color: setTextColor)),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lister/controller.dart';
@@ -12,13 +13,13 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 void main() async {
   await Hive.initFlutter();
   await ListerController.initialize();
+  SystemChrome.setSystemUIOverlayStyle(mySystemTheme);
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: fontFamily,
-        scaffoldBackgroundColor: backgroundColor,
-      ),
+      themeMode: ThemeMode.dark,
+      darkTheme: mainTheme,
+      theme: mainTheme,
       home: Lister(),
     ),
   );
