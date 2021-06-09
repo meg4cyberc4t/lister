@@ -38,4 +38,11 @@ class ListerController {
   static String getter(position) => mainList[position];
 
   static int get length => mainList.length;
+
+  static void clearStats() {
+    deletedToDoCounter = 0;
+    doneToDoCounter = 0;
+    storage.put('deletedToDoCounter', deletedToDoCounter);
+    storage.put('doneToDoCounter', doneToDoCounter);
+  }
 }

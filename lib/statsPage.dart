@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lister/Dialogs/correctionDialog.dart';
+import 'package:lister/components/ElevatedFloatingActionButton.dart';
 import 'package:lister/controller.dart';
 import 'package:lister/variables.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -25,10 +27,12 @@ class _StatsPageState extends State<StatsPage> {
         centerTitle: true,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: activeColorPrimary,
+      floatingActionButton: ElevatedFloatingActionButton(
+          title: 'Обновить',
           onPressed: () => setState(() {}),
-          label: Text('Обновить')),
+          onLongPress: () {
+            correctionDialog(context: context, setState: setState);
+          }),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
