@@ -31,15 +31,21 @@ class _HomePageState extends State<HomePage> {
         onPressed: () => createAdderDialog(context, setState),
         onLongPress: () {},
       ),
-      body: ListView.builder(
-        itemCount: ListerController.length,
-        itemBuilder: (BuildContext context, int position) {
-          return TableToDo(
-            position: position,
-            title: ListerController.getter(position),
-            fatherSetState: () => setState(() {}),
-          );
-        },
+      body: RefreshIndicator(
+        onRefresh: () async =>
+            Future.delayed(Duration(milliseconds: 400), () => setState(() {})),
+        color: setTextColor,
+        backgroundColor: activeColorPrimary,
+        child: ListView.builder(
+          itemCount: ListerController.length,
+          itemBuilder: (BuildContext context, int position) {
+            return TableToDo(
+              position: position,
+              title: ListerController.getter(position),
+              fatherSetState: () => setState(() {}),
+            );
+          },
+        ),
       ),
     );
   }
