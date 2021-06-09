@@ -8,6 +8,17 @@ Future<dynamic> createAdderDialog(BuildContext context, setState) {
       context: context,
       builder: (context) {
         TextEditingController _textEditingController = TextEditingController();
+        Function submitFunction = () {
+          String text = _textEditingController.text.trim();
+          if (text.isNotEmpty) {
+            ListerController.add(text);
+            setState(() {});
+            Navigator.of(context).pop(false);
+          } else {
+            // SnackBar(content: Snack)
+            _textEditingController.text = '';
+          }
+        };
         return Dialog(
             child: Container(
           padding: EdgeInsets.all(2),
@@ -24,8 +35,10 @@ Future<dynamic> createAdderDialog(BuildContext context, setState) {
                     )),
                 SizedBox(height: 10),
                 MyTextField(
-                    labeltext: 'Название задачи',
-                    textEditingController: _textEditingController),
+                  labeltext: 'Название задачи',
+                  textEditingController: _textEditingController,
+                  onSubmitted: submitFunction,
+                ),
                 SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -46,17 +59,7 @@ Future<dynamic> createAdderDialog(BuildContext context, setState) {
                       ),
                     ),
                     OutlinedButton(
-                      onPressed: () {
-                        String text = _textEditingController.text.trim();
-                        if (text.isNotEmpty) {
-                          ListerController.add(text);
-                          setState(() {});
-                          Navigator.of(context).pop(false);
-                        } else {
-                          // SnackBar(content: Snack)
-                          _textEditingController.text = '';
-                        }
-                      },
+                      onPressed: () => submitFunction(),
                       style: ButtonStyle(
                         alignment: Alignment.center,
                         overlayColor: MaterialStateProperty.all<Color>(
