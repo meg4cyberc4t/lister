@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:lister/controller.dart';
-import 'package:lister/homePage.dart';
-import 'package:lister/settingsPage.dart';
-import 'package:lister/statsPage.dart';
+import 'package:lister/components/controller.dart';
+import 'package:lister/pages/homePage.dart';
+import 'package:lister/pages/settingsPage.dart';
+import 'package:lister/pages/statsPage.dart';
 import 'package:lister/variables.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 

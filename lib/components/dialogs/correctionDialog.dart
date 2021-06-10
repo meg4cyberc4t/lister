@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lister/controller.dart';
+import 'package:lister/components/controller.dart';
 import 'package:lister/variables.dart';
 
 Future<dynamic> correctionDialog({

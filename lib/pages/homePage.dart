@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:lister/Dialogs/createDialog.dart';
+import 'package:lister/components/dialogs/createDialog.dart';
 import 'package:lister/components/ElevatedFloatingActionButton.dart';
-import 'package:lister/controller.dart';
+import 'package:lister/components/controller.dart';
 import 'package:lister/variables.dart';
 import 'package:flutter/cupertino.dart';
 

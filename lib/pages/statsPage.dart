@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lister/Dialogs/correctionDialog.dart';
+import 'package:lister/components/Dialogs/correctionDialog.dart';
 import 'package:lister/components/ElevatedFloatingActionButton.dart';
-import 'package:lister/controller.dart';
+import 'package:lister/components/controller.dart';
 import 'package:lister/variables.dart';
 import 'package:pie_chart/pie_chart.dart';
 
