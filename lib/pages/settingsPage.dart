@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lister/components/FolderTitle.dart';
+import 'package:lister/components/MaterialButtonSettings.dart';
 import 'package:lister/variables.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -15,11 +17,21 @@ class SettingsPage extends StatelessWidget {
         centerTitle: true,
         backgroundColor: activeColorPrimary,
       ),
-      body: Center(
-        child: Text(
-          'Да будут тут настройки, ацтаньте...',
-          style: TextStyle(color: setTextColor),
-        ),
+      body: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          FolderTitle(title: 'Общие'),
+          MaterialButtonSettings(title: 'Тема'),
+          MaterialButtonSettings(title: 'Звук выполнения задачи'),
+          MaterialButtonSettings(title: 'Папки'),
+          MaterialButtonSettings(title: 'Закреплённые задачи'),
+          MaterialButtonSettings(title: 'Язык'),
+          SizedBox(height: 10),
+          FolderTitle(title: 'О сервисе'),
+          MaterialButtonSettings(title: 'Версия'),
+          MaterialButtonSettings(title: 'Поддержка'),
+          MaterialButtonSettings(title: 'Разработчики'),
+        ],
       ),
     );
   }
