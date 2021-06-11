@@ -18,31 +18,32 @@ class MyTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     var borderSide2 = BorderSide(
       style: BorderStyle.solid,
-      color: colors[2] ?? Color(0),
+      color: currentThemeLight ? Color(0xFF212121) : Color(0xFFFFFFFF),
     );
     return TextField(
       autocorrect: true,
       autofocus: true,
       controller: _textEditingController,
       onSubmitted: (value) => onSubmitted(),
-      cursorColor: colors[2],
+      cursorColor: currentThemeLight ? Color(0xFF212121) : Color(0xFFFFFFFF),
       textAlign: TextAlign.center,
       decoration: InputDecoration(
-          labelStyle: TextStyle(color: colors[2]),
+          labelStyle: TextStyle(
+              color: currentThemeLight ? Color(0xFF212121) : Color(0xFFFFFFFF)),
           labelText: labeltext,
           focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
             style: BorderStyle.solid,
-            color: colors[2] ?? Color(0),
+            color: currentThemeLight ? Color(0xFF212121) : Color(0xFFFFFFFF),
           )),
           enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
             style: BorderStyle.solid,
-            color: colors[2] ?? Color(0),
+            color: currentThemeLight ? Color(0xFF212121) : Color(0xFFFFFFFF),
           )),
           border: OutlineInputBorder(borderSide: borderSide2)),
       style: TextStyle(
-        color: colors[2],
+        color: currentThemeLight ? Color(0xFF212121) : Color(0xFFFFFFFF),
         fontSize: 20,
       ),
     );

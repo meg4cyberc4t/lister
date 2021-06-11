@@ -19,21 +19,23 @@ class FolderTitle extends StatelessWidget {
               flex: 1,
               child: Container(
                 height: 1,
-                color: colors[2],
+                color:
+                    currentThemeLight ? Color(0xFF474747) : Color(0xFFFFFFFF),
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Text(
                 title,
-                style: TextStyle(color: colors[2], fontSize: 20),
+                style: TextStyle(fontSize: 20),
               ),
             ),
             Flexible(
               flex: 1,
               child: Container(
                 height: 1,
-                color: colors[2],
+                color:
+                    currentThemeLight ? Color(0xFF474747) : Color(0xFFFFFFFF),
               ),
             ),
           ],

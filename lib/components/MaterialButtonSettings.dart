@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lister/variables.dart';
 
 class MaterialButtonSettings extends StatelessWidget {
   MaterialButtonSettings({
@@ -29,7 +28,6 @@ class MaterialButtonSettings extends StatelessWidget {
                     textDirection: TextDirection.ltr,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: colors[2],
                         fontSize: MediaQuery.of(context).size.width < 400
                             ? MediaQuery.of(context).size.width / 16
                             : 400 / 16),
@@ -39,7 +37,7 @@ class MaterialButtonSettings extends StatelessWidget {
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.9,
-              child: Divider(height: 1, color: colors[0]),
+              child: Divider(height: 1),
             ),
           ],
         ),

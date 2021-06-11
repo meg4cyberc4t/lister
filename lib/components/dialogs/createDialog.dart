@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lister/components/MyOutlinedButton.dart';
 import 'package:lister/components/MyTextField.dart';
 import 'package:lister/components/controller.dart';
 import 'package:lister/variables.dart';
@@ -20,10 +21,7 @@ Future<dynamic> createAdderDialog(BuildContext context, setState) {
           }
         };
         return Dialog(
-            child: Container(
-          padding: EdgeInsets.all(1),
           child: Container(
-            color: colors[1],
             padding: EdgeInsets.all(10),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -31,7 +29,6 @@ Future<dynamic> createAdderDialog(BuildContext context, setState) {
                 Text('Создание',
                     style: TextStyle(
                       fontSize: fontSize2,
-                      color: colors[2],
                     )),
                 SizedBox(height: 10),
                 MyTextField(
@@ -43,43 +40,19 @@ Future<dynamic> createAdderDialog(BuildContext context, setState) {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    OutlinedButton(
-                      onPressed: () => Navigator.of(context).pop(false),
-                      style: ButtonStyle(
-                        alignment: Alignment.center,
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            colors[0] ?? Color(0)),
-                        overlayColor: MaterialStateProperty.all<Color>(
-                            colors[2]!.withOpacity(0.1)),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text('Назад',
-                            style: TextStyle(
-                                fontSize: fontSize3, color: colors[2])),
-                      ),
+                    MyOutlinedButton(
+                      title: 'Назад',
+                      submitFunction: () => Navigator.of(context).pop(false),
                     ),
-                    OutlinedButton(
-                      onPressed: () => submitFunction(),
-                      style: ButtonStyle(
-                        alignment: Alignment.center,
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            colors[0] ?? Color(0)),
-                        overlayColor: MaterialStateProperty.all<Color>(
-                            colors[2]!.withOpacity(0.1)),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text('Далее',
-                            style: TextStyle(
-                                fontSize: fontSize3, color: colors[2])),
-                      ),
+                    MyOutlinedButton(
+                      title: 'Далее',
+                      submitFunction: submitFunction,
                     )
                   ],
                 )
               ],
             ),
           ),
-        ));
+        );
       });
 }

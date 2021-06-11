@@ -17,13 +17,11 @@ class _StatsPageState extends State<StatsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colors[1],
       appBar: AppBar(
         title: Text(
           'Статистика',
           style: TextStyle(fontSize: fontSize2),
         ),
-        backgroundColor: colors[0],
         centerTitle: true,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -56,17 +54,14 @@ class _StatsPageState extends State<StatsPage> {
                     : 400 / 1.3,
                 initialAngleInDegree: 0,
                 legendOptions: LegendOptions(
-                  showLegendsInRow: false,
-                  legendPosition: LegendPosition.bottom,
-                  legendShape: BoxShape.circle,
-                  legendTextStyle: TextStyle(
-                    color: colors[2],
-                  ),
-                ),
+                    showLegendsInRow: false,
+                    legendPosition: LegendPosition.bottom,
+                    legendShape: BoxShape.circle,
+                    legendTextStyle: TextStyle(fontFamily: fontFamily)),
                 colorList: [
-                  colors[6] ?? Color(0),
-                  colors[4] ?? Color(0),
-                  colors[5] ?? Color(0),
+                  currentThemeLight ? Color(0xFF46CF68) : Color(0xFF34C759),
+                  currentThemeLight ? Color(0xFFFF534A) : Color(0xFFFF3B30),
+                  currentThemeLight ? Color(0xFFEFEF86) : Color(0xFFD1D1D6),
                 ],
                 chartValuesOptions: ChartValuesOptions(
                   showChartValueBackground: true,
@@ -77,18 +72,12 @@ class _StatsPageState extends State<StatsPage> {
               SizedBox(height: 10),
               Text(
                 'Всего задач:',
-                style: TextStyle(
-                  color: colors[2],
-                ),
               ),
               Text(
                 (ListerController.doneToDoCounter +
                         ListerController.deletedToDoCounter +
                         ListerController.length)
                     .toString(),
-                style: TextStyle(
-                  color: colors[2],
-                ),
               ),
               SizedBox(height: 30),
             ],

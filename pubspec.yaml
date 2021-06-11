@@ -16,6 +16,7 @@ dependencies:
   persistent_bottom_nav_bar: ^4.0.2
   hive_flutter: ^1.0.0
   pie_chart: ^5.0.0
+  theme_mode_handler: ^3.0.0
 
 dev_dependencies:
   flutter_test:

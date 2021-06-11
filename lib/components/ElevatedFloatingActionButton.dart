@@ -12,14 +12,13 @@ class ElevatedFloatingActionButton extends StatelessWidget {
   final title, color, onPressed, onLongPress;
   @override
   Widget build(BuildContext context) {
-    var thiscolor = (color == null) ? colors[0] : color;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(30.0),
           ),
           animationDuration: Duration(seconds: 1),
-          primary: thiscolor,
+          primary: (currentThemeLight ? Color(0xFF474747) : Color(0xFF212121)),
         ),
         onPressed: () => onPressed(),
         onLongPress: () => onLongPress(),
@@ -27,7 +26,11 @@ class ElevatedFloatingActionButton extends StatelessWidget {
           width: 110,
           height: 50,
           padding: const EdgeInsets.all(15.0),
-          child: Center(child: Text(title)),
+          child: Center(
+              child: Text(
+            title,
+            style: TextStyle(color: Color(0xFFFFFFFF)),
+          )),
         ));
   }
 }

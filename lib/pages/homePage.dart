@@ -17,14 +17,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colors[1],
       appBar: AppBar(
         title: Text(
           'Задачи',
           style: TextStyle(fontSize: fontSize2),
         ),
         centerTitle: true,
-        backgroundColor: colors[0],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: ElevatedFloatingActionButton(
@@ -33,21 +31,19 @@ class _HomePageState extends State<HomePage> {
         onLongPress: () {},
       ),
       body: RefreshIndicator(
-        onRefresh: () async =>
-            Future.delayed(Duration(milliseconds: 400), () => setState(() {})),
-        color: colors[2],
-        backgroundColor: colors[0],
-        child: ListView.builder(
-          itemCount: ListerController.length,
-          itemBuilder: (BuildContext context, int position) {
-            return TableToDo(
-              position: position,
-              title: ListerController.getter(position),
-              fatherSetState: () => setState(() {}),
-            );
-          },
-        ),
-      ),
+          onRefresh: () async => Future.delayed(
+              Duration(milliseconds: 400), () => setState(() {})),
+          color: currentThemeLight ? Color(0xFF474747) : Color(0xFFFFFFFF),
+          child: ListView.builder(
+            itemCount: ListerController.length,
+            itemBuilder: (BuildContext context, int position) {
+              return TableToDo(
+                position: position,
+                title: ListerController.getter(position),
+                fatherSetState: () => setState(() {}),
+              );
+            },
+          )),
     );
   }
 }
@@ -112,7 +108,7 @@ class _TableToDoState extends State<TableToDo> {
           return IconSlideAction(
             caption: 'Check',
             foregroundColor: Colors.white,
-            color: colors[6],
+            color: currentThemeLight ? Color(0xFF46CF68) : Color(0xFF34C759),
             iconWidget: Icon(
               Icons.check,
               color: Colors.white,
@@ -124,14 +120,15 @@ class _TableToDoState extends State<TableToDo> {
           actionCount: 1,
           builder: (context, index, animation, step) => IconSlideAction(
                 caption: 'Delete',
-                color: colors[4],
+                color:
+                    currentThemeLight ? Color(0xFFFF534A) : Color(0xFFFF3B30),
                 foregroundColor: Colors.white,
                 icon: Icons.delete,
               )),
       child: Column(
         children: [
           Container(
-            color: colors[1],
+            color: currentThemeLight ? Color(0xFFEEEEEE) : Color(0xFF353535),
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -140,7 +137,6 @@ class _TableToDoState extends State<TableToDo> {
                   textDirection: TextDirection.ltr,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: colors[2],
                       fontSize: MediaQuery.of(context).size.width < 400
                           ? MediaQuery.of(context).size.width / 16
                           : 400 / 16),
@@ -148,10 +144,7 @@ class _TableToDoState extends State<TableToDo> {
               ),
             ),
           ),
-          Divider(
-            height: 1,
-            color: colors[0],
-          ),
+          Divider(height: 1),
         ],
       ),
     );

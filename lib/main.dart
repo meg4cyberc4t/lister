@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lister/components/controller.dart';
@@ -13,13 +12,15 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 void main() async {
   await Hive.initFlutter();
   await ListerController.initialize();
-  SystemChrome.setSystemUIOverlayStyle(mySystemTheme);
+  // SystemChrome.setSystemUIOverlayStyle(mySystemTheme);
+  print("ThemeMode.system");
+  print(ThemeMode.system);
   runApp(
     MaterialApp(
+      theme: mainThemeLight,
+      darkTheme: mainThemeDark,
+      themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.dark,
-      darkTheme: mainTheme,
-      theme: mainTheme,
       home: Lister(),
     ),
   );
@@ -39,32 +40,40 @@ class _ListerState extends State<Lister> {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.query_stats),
         title: 'Статистика',
-        activeColorPrimary: colors[3] ?? Color(0),
-        inactiveColorPrimary: colors[3],
+        activeColorPrimary: (currentThemeLight
+                ? defaultLightColors[3]
+                : defaultDarkColors[3]) ??
+            Color(0),
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.home),
         title: 'Задачи',
-        activeColorPrimary: colors[3] ?? Color(0),
-        inactiveColorPrimary: colors[3],
+        activeColorPrimary: (currentThemeLight
+                ? defaultLightColors[3]
+                : defaultDarkColors[3]) ??
+            Color(0),
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.settings),
         title: 'Настройки',
-        activeColorPrimary: colors[3] ?? Color(0),
-        inactiveColorPrimary: colors[3],
+        activeColorPrimary: (currentThemeLight
+                ? defaultLightColors[3]
+                : defaultDarkColors[3]) ??
+            Color(0),
       ),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
+    currentThemeLight = Theme.of(context).brightness == Brightness.light;
     globalSetState = setState;
     return Scaffold(
       body: PersistentTabView(
         context,
         controller: _persistentTabController,
-        backgroundColor: colors[0] ?? Color(0),
+        backgroundColor:
+            currentThemeLight ? Color(0xFF474747) : Color(0xFF212121),
         screens: [
           StatsPage(),
           HomePage(),
