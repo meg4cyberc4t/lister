@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lister/components/FolderTitle.dart';
 import 'package:lister/components/MaterialButtonSettings.dart';
+import 'package:lister/pages/settingsPages/settingsVariablesPage.dart';
 import 'package:lister/variables.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -9,13 +10,14 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: colors[1],
       appBar: AppBar(
         title: Text(
           'Настройки',
-          style: TextStyle(fontSize: appBarTextTitleSize),
+          style: TextStyle(fontSize: fontSize2),
         ),
         centerTitle: true,
-        backgroundColor: activeColorPrimary,
+        backgroundColor: colors[0],
       ),
       body: ListView(
         padding: EdgeInsets.zero,
@@ -31,6 +33,15 @@ class SettingsPage extends StatelessWidget {
           MaterialButtonSettings(title: 'Версия'),
           MaterialButtonSettings(title: 'Поддержка'),
           MaterialButtonSettings(title: 'Разработчики'),
+          SizedBox(height: 10),
+          FolderTitle(title: 'Специальные настройки'),
+          MaterialButtonSettings(
+              title: 'Настройка переменных',
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SettingsVariablesPage()))),
+          SizedBox(height: 5),
         ],
       ),
     );

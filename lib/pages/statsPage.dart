@@ -17,13 +17,13 @@ class _StatsPageState extends State<StatsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: colors[1],
       appBar: AppBar(
         title: Text(
           'Статистика',
-          style: TextStyle(fontSize: appBarTextTitleSize),
+          style: TextStyle(fontSize: fontSize2),
         ),
-        backgroundColor: activeColorPrimary,
+        backgroundColor: colors[0],
         centerTitle: true,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -60,13 +60,13 @@ class _StatsPageState extends State<StatsPage> {
                   legendPosition: LegendPosition.bottom,
                   legendShape: BoxShape.circle,
                   legendTextStyle: TextStyle(
-                    color: setTextColor,
+                    color: colors[2],
                   ),
                 ),
                 colorList: [
-                  colorDones,
-                  colorDeletes,
-                  colorMoments,
+                  colors[6] ?? Color(0),
+                  colors[4] ?? Color(0),
+                  colors[5] ?? Color(0),
                 ],
                 chartValuesOptions: ChartValuesOptions(
                   showChartValueBackground: true,
@@ -78,7 +78,7 @@ class _StatsPageState extends State<StatsPage> {
               Text(
                 'Всего задач:',
                 style: TextStyle(
-                  color: setTextColor,
+                  color: colors[2],
                 ),
               ),
               Text(
@@ -87,7 +87,7 @@ class _StatsPageState extends State<StatsPage> {
                         ListerController.length)
                     .toString(),
                 style: TextStyle(
-                  color: setTextColor,
+                  color: colors[2],
                 ),
               ),
               SizedBox(height: 30),

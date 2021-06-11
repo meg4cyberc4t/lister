@@ -13,7 +13,7 @@ Future<dynamic> correctionDialog({
             child: Container(
           padding: EdgeInsets.all(2),
           child: Container(
-            color: backgroundColor,
+            color: colors[1],
             padding: EdgeInsets.all(10),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -21,8 +21,8 @@ Future<dynamic> correctionDialog({
                 Text('Отчистить историю?',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: appBarTextTitleSize,
-                      color: setTextColor,
+                      fontSize: fontSize2,
+                      color: colors[2],
                     )),
                 SizedBox(height: 10),
                 Row(
@@ -33,14 +33,13 @@ Future<dynamic> correctionDialog({
                       style: ButtonStyle(
                         alignment: Alignment.center,
                         overlayColor: MaterialStateProperty.all<Color>(
-                            setTextColor.withOpacity(0.1)),
+                            colors[2]!.withOpacity(0.1)),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
                         child: Text('Нет',
                             style: TextStyle(
-                                fontSize: OutlinedButtonTextSize,
-                                color: setTextColor)),
+                                fontSize: fontSize3, color: colors[2])),
                       ),
                     ),
                     OutlinedButton(
@@ -51,14 +50,13 @@ Future<dynamic> correctionDialog({
                       style: ButtonStyle(
                         alignment: Alignment.center,
                         overlayColor: MaterialStateProperty.all<Color>(
-                            setTextColor.withOpacity(0.1)),
+                            colors[2]!.withOpacity(0.1)),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
                         child: Text('Да',
                             style: TextStyle(
-                                fontSize: OutlinedButtonTextSize,
-                                color: setTextColor)),
+                                fontSize: fontSize3, color: colors[2])),
                       ),
                     )
                   ],

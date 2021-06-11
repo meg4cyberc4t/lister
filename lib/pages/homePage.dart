@@ -17,13 +17,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: colors[1],
       appBar: AppBar(
         title: Text(
           'Задачи',
-          style: TextStyle(fontSize: appBarTextTitleSize),
+          style: TextStyle(fontSize: fontSize2),
         ),
         centerTitle: true,
-        backgroundColor: activeColorPrimary,
+        backgroundColor: colors[0],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: ElevatedFloatingActionButton(
@@ -34,8 +35,8 @@ class _HomePageState extends State<HomePage> {
       body: RefreshIndicator(
         onRefresh: () async =>
             Future.delayed(Duration(milliseconds: 400), () => setState(() {})),
-        color: setTextColor,
-        backgroundColor: activeColorPrimary,
+        color: colors[2],
+        backgroundColor: colors[0],
         child: ListView.builder(
           itemCount: ListerController.length,
           itemBuilder: (BuildContext context, int position) {
@@ -111,7 +112,7 @@ class _TableToDoState extends State<TableToDo> {
           return IconSlideAction(
             caption: 'Check',
             foregroundColor: Colors.white,
-            color: colorDones,
+            color: colors[6],
             iconWidget: Icon(
               Icons.check,
               color: Colors.white,
@@ -123,14 +124,14 @@ class _TableToDoState extends State<TableToDo> {
           actionCount: 1,
           builder: (context, index, animation, step) => IconSlideAction(
                 caption: 'Delete',
-                color: Colors.red,
+                color: colors[4],
                 foregroundColor: Colors.white,
                 icon: Icons.delete,
               )),
       child: Column(
         children: [
           Container(
-            color: backgroundColor,
+            color: colors[1],
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -139,7 +140,7 @@ class _TableToDoState extends State<TableToDo> {
                   textDirection: TextDirection.ltr,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: setTextColor,
+                      color: colors[2],
                       fontSize: MediaQuery.of(context).size.width < 400
                           ? MediaQuery.of(context).size.width / 16
                           : 400 / 16),
@@ -149,7 +150,7 @@ class _TableToDoState extends State<TableToDo> {
           ),
           Divider(
             height: 1,
-            color: Color(0xFF212121),
+            color: colors[0],
           ),
         ],
       ),

@@ -21,17 +21,17 @@ Future<dynamic> createAdderDialog(BuildContext context, setState) {
         };
         return Dialog(
             child: Container(
-          padding: EdgeInsets.all(2),
+          padding: EdgeInsets.all(1),
           child: Container(
-            color: backgroundColor,
+            color: colors[1],
             padding: EdgeInsets.all(10),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text('Создание',
                     style: TextStyle(
-                      fontSize: appBarTextTitleSize,
-                      color: setTextColor,
+                      fontSize: fontSize2,
+                      color: colors[2],
                     )),
                 SizedBox(height: 10),
                 MyTextField(
@@ -47,30 +47,32 @@ Future<dynamic> createAdderDialog(BuildContext context, setState) {
                       onPressed: () => Navigator.of(context).pop(false),
                       style: ButtonStyle(
                         alignment: Alignment.center,
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            colors[0] ?? Color(0)),
                         overlayColor: MaterialStateProperty.all<Color>(
-                            setTextColor.withOpacity(0.1)),
+                            colors[2]!.withOpacity(0.1)),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(2.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: Text('Назад',
                             style: TextStyle(
-                                fontSize: OutlinedButtonTextSize,
-                                color: setTextColor)),
+                                fontSize: fontSize3, color: colors[2])),
                       ),
                     ),
                     OutlinedButton(
                       onPressed: () => submitFunction(),
                       style: ButtonStyle(
                         alignment: Alignment.center,
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            colors[0] ?? Color(0)),
                         overlayColor: MaterialStateProperty.all<Color>(
-                            setTextColor.withOpacity(0.1)),
+                            colors[2]!.withOpacity(0.1)),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(2.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: Text('Далее',
                             style: TextStyle(
-                                fontSize: OutlinedButtonTextSize,
-                                color: setTextColor)),
+                                fontSize: fontSize3, color: colors[2])),
                       ),
                     )
                   ],

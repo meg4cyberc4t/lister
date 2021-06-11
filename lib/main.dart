@@ -39,31 +39,32 @@ class _ListerState extends State<Lister> {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.query_stats),
         title: 'Статистика',
-        activeColorPrimary: inactiveColorPrimary,
-        inactiveColorPrimary: inactiveColorPrimary,
+        activeColorPrimary: colors[3] ?? Color(0),
+        inactiveColorPrimary: colors[3],
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.home),
         title: 'Задачи',
-        activeColorPrimary: inactiveColorPrimary,
-        inactiveColorPrimary: inactiveColorPrimary,
+        activeColorPrimary: colors[3] ?? Color(0),
+        inactiveColorPrimary: colors[3],
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.settings),
         title: 'Настройки',
-        activeColorPrimary: inactiveColorPrimary,
-        inactiveColorPrimary: inactiveColorPrimary,
+        activeColorPrimary: colors[3] ?? Color(0),
+        inactiveColorPrimary: colors[3],
       ),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
+    globalSetState = setState;
     return Scaffold(
       body: PersistentTabView(
         context,
         controller: _persistentTabController,
-        backgroundColor: activeColorPrimary,
+        backgroundColor: colors[0] ?? Color(0),
         screens: [
           StatsPage(),
           HomePage(),
