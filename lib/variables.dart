@@ -63,8 +63,6 @@ ThemeData mainThemeDark = ThemeData(
   dividerColor: Color(0xFF212121),
 );
 
-// SystemUiOverlayStyle mySystemTheme =
-//     SystemUiOverlayStyle.light.copyWith(systemNavigationBarColor: colors[0]);
 bool currentThemeLight = true;
 
 Function globalSetState = () {};
