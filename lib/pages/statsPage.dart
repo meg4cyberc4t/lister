@@ -40,12 +40,12 @@ class _StatsPageState extends State<StatsPage> {
               SizedBox(height: 30),
               PieChart(
                 dataMap: {
-                  'Сделанные - ${ListerController.doneToDoCounter}':
-                      ListerController.doneToDoCounter.toDouble(),
-                  'Удалённые - ${ListerController.deletedToDoCounter}':
-                      ListerController.deletedToDoCounter.toDouble(),
-                  'В данный момент - ${ListerController.length}':
-                      ListerController.length.toDouble(),
+                  'Сделанные - ${ListerController.counters.doneNotes}':
+                      ListerController.counters.doneNotes.toDouble(),
+                  'Удалённые - ${ListerController.counters.deletedNotes}':
+                      ListerController.counters.deletedNotes.toDouble(),
+                  'В данный момент - ${ListerController.lengthAll}':
+                      ListerController.lengthAll.toDouble(),
                 },
                 animationDuration: Duration(seconds: 1),
                 centerText: 'Задачи',
@@ -74,9 +74,9 @@ class _StatsPageState extends State<StatsPage> {
                 'Всего задач:',
               ),
               Text(
-                (ListerController.doneToDoCounter +
-                        ListerController.deletedToDoCounter +
-                        ListerController.length)
+                (ListerController.counters.deletedNotes +
+                        ListerController.counters.doneNotes +
+                        ListerController.lengthAll)
                     .toString(),
               ),
               SizedBox(height: 30),

@@ -4,7 +4,7 @@ import 'package:lister/components/MyTextField.dart';
 import 'package:lister/components/controller.dart';
 import 'package:lister/variables.dart';
 
-Future<dynamic> createAdderDialog(BuildContext context, setState) {
+Future<dynamic> createAdderNoteDialog(BuildContext context, setState) {
   return showDialog(
       context: context,
       builder: (context) {
@@ -12,7 +12,7 @@ Future<dynamic> createAdderDialog(BuildContext context, setState) {
         Function submitFunction = () {
           String text = _textEditingController.text.trim();
           if (text.isNotEmpty) {
-            ListerController.add(text);
+            ListerController.addNote(title: text);
             setState(() {});
             Navigator.of(context).pop(false);
           } else {

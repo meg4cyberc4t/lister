@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lister/components/FolderTitle.dart';
 import 'package:lister/components/MaterialButtonSettings.dart';
+import 'package:lister/pages/settingsPages/developersPage.dart';
+import 'package:lister/pages/settingsPages/helpPage.dart';
+import 'package:lister/pages/settingsPages/versionPage.dart';
 import 'package:lister/variables.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -21,15 +24,31 @@ class SettingsPage extends StatelessWidget {
         children: [
           FolderTitle(title: 'Общие'),
           MaterialButtonSettings(title: 'Тема'),
-          MaterialButtonSettings(title: 'Звук выполнения задачи'),
-          MaterialButtonSettings(title: 'Папки'),
-          MaterialButtonSettings(title: 'Закреплённые задачи'),
+          MaterialButtonSettings(title: 'Шрифт'),
           MaterialButtonSettings(title: 'Язык'),
           SizedBox(height: 10),
           FolderTitle(title: 'О сервисе'),
-          MaterialButtonSettings(title: 'Версия'),
-          MaterialButtonSettings(title: 'Поддержка'),
-          MaterialButtonSettings(title: 'Разработчики'),
+          MaterialButtonSettings(
+              title: 'Версия',
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => VersionPage(),
+                  ))),
+          MaterialButtonSettings(
+              title: 'Поддержка / Обратная связь',
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HelpPage(),
+                  ))),
+          MaterialButtonSettings(
+              title: 'Разработчики',
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DevelopersPage(),
+                  ))),
           SizedBox(height: 10),
         ],
       ),
