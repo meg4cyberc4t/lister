@@ -3,11 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 const ToDoDatabaseName = "ToDo";
-const DatabasesPath = "../.AppData/lister";
+const SettingsDatabaseName = "Settings";
+const DatabasesPath = "~/.AppData/lister";
 
 double fontSize1 = 35.0;
 double fontSize2 = 30.0; // AppBarTitleSize
 double fontSize3 = 20.0; // OutlinedButtonTextSize
+
+bool boolStats = true;
+
+String themeSettings = 'system';
 
 const String fontFamily = 'Montserrat';
 

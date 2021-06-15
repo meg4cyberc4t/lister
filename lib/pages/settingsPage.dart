@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lister/components/FolderTitle.dart';
 import 'package:lister/components/MaterialButtonSettings.dart';
+import 'package:lister/components/MySwitchStatsSettings.dart';
 import 'package:lister/pages/settingsPages/developersPage.dart';
 import 'package:lister/pages/settingsPages/helpPage.dart';
 import 'package:lister/pages/settingsPages/versionPage.dart';
@@ -23,9 +24,9 @@ class SettingsPage extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           FolderTitle(title: 'Общие'),
+          MySwitchStatsSettings(title: 'Статистика'),
           MaterialButtonSettings(title: 'Тема'),
           MaterialButtonSettings(title: 'Шрифт'),
-          MaterialButtonSettings(title: 'Язык'),
           SizedBox(height: 10),
           FolderTitle(title: 'О сервисе'),
           MaterialButtonSettings(

@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lister/components/controller.dart';
 import 'package:lister/components/models/group.dart';
+import 'package:lister/components/settingsController.dart';
 import 'package:lister/pages/homePage.dart';
 import 'package:lister/pages/settingsPage.dart';
 import 'package:lister/pages/statsPage.dart';
@@ -19,7 +20,7 @@ void main() async {
   Hive.registerAdapter(CountersAdapter());
   Hive.registerAdapter(NoteAdapter());
   Hive.registerAdapter(GroupAdapter());
-
+  await SettingsController.initialize();
   await ListerController.initialize();
   runApp(
     MaterialApp(
@@ -54,37 +55,61 @@ class _ListerState extends State<Lister> {
         controller: _persistentTabController,
         backgroundColor:
             currentThemeLight ? Color(0xFF474747) : Color(0xFF212121),
-        screens: [
-          StatsPage(),
-          HomePage(),
-          SettingsPage(),
-        ],
-        items: [
-          PersistentBottomNavBarItem(
-            icon: Icon(Icons.query_stats),
-            title: 'Статистика',
-            activeColorPrimary: (currentThemeLight
-                    ? defaultLightColors[3]
-                    : defaultDarkColors[3]) ??
-                Color(0),
-          ),
-          PersistentBottomNavBarItem(
-            icon: Icon(Icons.home),
-            title: 'Задачи',
-            activeColorPrimary: (currentThemeLight
-                    ? defaultLightColors[3]
-                    : defaultDarkColors[3]) ??
-                Color(0),
-          ),
-          PersistentBottomNavBarItem(
-            icon: Icon(Icons.settings),
-            title: 'Настройки',
-            activeColorPrimary: (currentThemeLight
-                    ? defaultLightColors[3]
-                    : defaultDarkColors[3]) ??
-                Color(0),
-          ),
-        ],
+        screens: boolStats
+            ? [
+                StatsPage(),
+                HomePage(),
+                SettingsPage(),
+              ]
+            : [
+                HomePage(),
+                SettingsPage(),
+              ],
+        items: boolStats
+            ? [
+                PersistentBottomNavBarItem(
+                  icon: Icon(Icons.query_stats),
+                  title: 'Статистика',
+                  activeColorPrimary: (currentThemeLight
+                          ? defaultLightColors[3]
+                          : defaultDarkColors[3]) ??
+                      Color(0),
+                ),
+                PersistentBottomNavBarItem(
+                  icon: Icon(Icons.home),
+                  title: 'Задачи',
+                  activeColorPrimary: (currentThemeLight
+                          ? defaultLightColors[3]
+                          : defaultDarkColors[3]) ??
+                      Color(0),
+                ),
+                PersistentBottomNavBarItem(
+                  icon: Icon(Icons.settings),
+                  title: 'Настройки',
+                  activeColorPrimary: (currentThemeLight
+                          ? defaultLightColors[3]
+                          : defaultDarkColors[3]) ??
+                      Color(0),
+                ),
+              ]
+            : [
+                PersistentBottomNavBarItem(
+                  icon: Icon(Icons.home),
+                  title: 'Задачи',
+                  activeColorPrimary: (currentThemeLight
+                          ? defaultLightColors[3]
+                          : defaultDarkColors[3]) ??
+                      Color(0),
+                ),
+                PersistentBottomNavBarItem(
+                  icon: Icon(Icons.settings),
+                  title: 'Настройки',
+                  activeColorPrimary: (currentThemeLight
+                          ? defaultLightColors[3]
+                          : defaultDarkColors[3]) ??
+                      Color(0),
+                ),
+              ],
         confineInSafeArea: true,
       ),
     );
