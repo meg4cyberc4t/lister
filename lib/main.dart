@@ -22,7 +22,6 @@ void main() async {
   Hive.registerAdapter(GroupAdapter());
   await SettingsController.initialize();
   await ListerController.initialize();
-
   runApp(
     MaterialApp(
       theme: mainThemeLight,
@@ -34,7 +33,7 @@ void main() async {
               : ThemeMode.light,
       debugShowCheckedModeBanner: false,
       home: Lister(),
-      title: 'lister',
+      title: 'Lister',
     ),
   );
 }
