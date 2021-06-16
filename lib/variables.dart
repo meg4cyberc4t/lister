@@ -3,38 +3,71 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 const ToDoDatabaseName = "ToDo";
-const DatabasesPath = "../.AppData/lister";
+const SettingsDatabaseName = "Settings";
+const DatabasesPath = "~/.AppData/lister";
 
-const FontSize1 = 35.0;
-const FontSize2 = 20.0;
+double fontSize1 = 35.0;
+double fontSize2 = 30.0; // AppBarTitleSize
+double fontSize3 = 20.0; // OutlinedButtonTextSize
 
-const activeColorPrimary = Color(0xff212121);
-const inactiveColorPrimary = CupertinoColors.systemGrey;
+bool boolStats = true;
 
-const colorDeletes = CupertinoColors.systemRed;
-const colorMoments = CupertinoColors.systemGrey4;
-const colorDones = CupertinoColors.activeGreen;
+String themeSettings = 'system';
 
-const backgroundColor = Color(0xFF353535);
-const setTextColor = CupertinoColors.white;
+const String fontFamily = 'Montserrat';
 
-const fontFamily = 'Montserrat';
+const Map<int, Color> defaultLightColors = {
+  0: Color(0xFF474747), // activeColorPrimary
+  1: Color(0xFFEEEEEE), // backgroundColor
+  2: Color(0xFF212121), // setTextColor
+  3: Color(0xFFEEEEEE), // inactiveColorPrimary
+  4: Color(0xFFFF534A), // colorDeletes
+  5: Color(0xFFEFEF86), // colorMoments
+  6: Color(0xFF46CF68), // colorDones
+};
 
-// const activeColorPrimary = CupertinoColors.activeBlue;
-// const inactiveColorPrimary = CupertinoColors.systemGrey;
-
-// const colorDeletes = Color(0xFF402C84);
-// const colorMoments = Color(0xFF6949D7);
-// const colorDones = Color(0xFF866FD7);
-
-const appBarTextTitleSize = 30.0;
-const OutlinedButtonTextSize = 25.0;
-
-ThemeData mainTheme = ThemeData(
+ThemeData mainThemeLight = ThemeData(
+  brightness: Brightness.light,
   fontFamily: fontFamily,
-  scaffoldBackgroundColor: backgroundColor,
-  accentColor: activeColorPrimary,
+  scaffoldBackgroundColor: Color(0xFFEEEEEE),
+  accentColor: Color(0xFF474747),
+  appBarTheme: AppBarTheme(
+    backgroundColor: Color(0xFF474747),
+  ),
+  dialogBackgroundColor: Color(0xFFEEEEEE),
+  dividerColor: Color(0xFF474747),
+  textTheme: TextTheme(
+    button: TextStyle(
+      color: Color(0xFF000000),
+    ),
+  ),
 );
 
-SystemUiOverlayStyle mySystemTheme =
-    SystemUiOverlayStyle.light.copyWith(systemNavigationBarColor: Colors.black);
+const Map<int, Color> defaultDarkColors = {
+  0: Color(0xFF212121), // activeColorPrimary
+  1: Color(0xFF353535), // backgroundColorw
+  2: Color(0xFFFFFFFF), // setTextColor
+  3: Color(0xFF8E8E93), // inactiveColorPrimary
+  4: Color(0xFFFF3B30), // colorDeletes
+  5: Color(0xFFD1D1D6), // colorMoments
+  6: Color(0xFF34C759), // colorDones
+};
+
+ThemeData mainThemeDark = ThemeData(
+  brightness: Brightness.dark,
+  fontFamily: fontFamily,
+  scaffoldBackgroundColor: Color(0xFF353535),
+  accentColor: Color(0xFF212121),
+  appBarTheme: AppBarTheme(
+    backgroundColor: Color(0xFF212121),
+  ),
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    backgroundColor: Color(0xFF212121),
+  ),
+  dialogBackgroundColor: Color(0xFF353535),
+  dividerColor: Color(0xFF212121),
+);
+
+bool currentThemeLight = true;
+
+Function globalSetState = () {};

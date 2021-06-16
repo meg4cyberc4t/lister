@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lister/Dialogs/correctionDialog.dart';
+import 'package:lister/components/Dialogs/correctionDialog.dart';
 import 'package:lister/components/ElevatedFloatingActionButton.dart';
-import 'package:lister/controller.dart';
+import 'package:lister/components/controller.dart';
 import 'package:lister/variables.dart';
 import 'package:pie_chart/pie_chart.dart';
 
@@ -17,13 +17,11 @@ class _StatsPageState extends State<StatsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text(
           'Статистика',
-          style: TextStyle(fontSize: appBarTextTitleSize),
+          style: TextStyle(fontSize: fontSize2),
         ),
-        backgroundColor: activeColorPrimary,
         centerTitle: true,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -42,12 +40,12 @@ class _StatsPageState extends State<StatsPage> {
               SizedBox(height: 30),
               PieChart(
                 dataMap: {
-                  'Сделанные - ${ListerController.doneToDoCounter}':
-                      ListerController.doneToDoCounter.toDouble(),
-                  'Удалённые - ${ListerController.deletedToDoCounter}':
-                      ListerController.deletedToDoCounter.toDouble(),
-                  'В данный момент - ${ListerController.length}':
-                      ListerController.length.toDouble(),
+                  'Сделанные - ${ListerController.counters.doneNotes}':
+                      ListerController.counters.doneNotes.toDouble(),
+                  'Удалённые - ${ListerController.counters.deletedNotes}':
+                      ListerController.counters.deletedNotes.toDouble(),
+                  'В данный момент - ${ListerController.lengthAll}':
+                      ListerController.lengthAll.toDouble(),
                 },
                 animationDuration: Duration(seconds: 1),
                 centerText: 'Задачи',
@@ -56,17 +54,14 @@ class _StatsPageState extends State<StatsPage> {
                     : 400 / 1.3,
                 initialAngleInDegree: 0,
                 legendOptions: LegendOptions(
-                  showLegendsInRow: false,
-                  legendPosition: LegendPosition.bottom,
-                  legendShape: BoxShape.circle,
-                  legendTextStyle: TextStyle(
-                    color: setTextColor,
-                  ),
-                ),
+                    showLegendsInRow: false,
+                    legendPosition: LegendPosition.bottom,
+                    legendShape: BoxShape.circle,
+                    legendTextStyle: TextStyle(fontFamily: fontFamily)),
                 colorList: [
-                  colorDones,
-                  colorDeletes,
-                  colorMoments,
+                  currentThemeLight ? Color(0xFF46CF68) : Color(0xFF34C759),
+                  currentThemeLight ? Color(0xFFFF534A) : Color(0xFFFF3B30),
+                  currentThemeLight ? Color(0xFFEFEF86) : Color(0xFFD1D1D6),
                 ],
                 chartValuesOptions: ChartValuesOptions(
                   showChartValueBackground: true,
@@ -77,18 +72,12 @@ class _StatsPageState extends State<StatsPage> {
               SizedBox(height: 10),
               Text(
                 'Всего задач:',
-                style: TextStyle(
-                  color: setTextColor,
-                ),
               ),
               Text(
-                (ListerController.doneToDoCounter +
-                        ListerController.deletedToDoCounter +
-                        ListerController.length)
+                (ListerController.counters.deletedNotes +
+                        ListerController.counters.doneNotes +
+                        ListerController.lengthAll)
                     .toString(),
-                style: TextStyle(
-                  color: setTextColor,
-                ),
               ),
               SizedBox(height: 30),
             ],

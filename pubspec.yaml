@@ -16,12 +16,21 @@ dependencies:
   persistent_bottom_nav_bar: ^4.0.2
   hive_flutter: ^1.0.0
   pie_chart: ^5.0.0
+  theme_mode_handler: ^3.0.0
+  url_launcher: ^6.0.6
+  flutter_launcher_icons: ^0.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   hive_generator: ^1.1.0
+  build_runner: ^1.8.1
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "icons/logo.png"
+  remove_alpha_ios: true
 
 flutter:
   uses-material-design: true

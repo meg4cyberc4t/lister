@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:lister/Dialogs/createDialog.dart';
+import 'package:lister/components/FolderTitle.dart';
+import 'package:lister/components/dialogs/createNoteDialog.dart';
 import 'package:lister/components/ElevatedFloatingActionButton.dart';
-import 'package:lister/controller.dart';
+import 'package:lister/components/controller.dart';
 import 'package:lister/variables.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -20,45 +21,61 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(
           'Задачи',
-          style: TextStyle(fontSize: appBarTextTitleSize),
+          style: TextStyle(fontSize: fontSize2),
         ),
         centerTitle: true,
-        backgroundColor: activeColorPrimary,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: ElevatedFloatingActionButton(
         title: 'Создать',
-        onPressed: () => createAdderDialog(context, setState),
+        onPressed: () => createAdderNoteDialog(context, setState),
         onLongPress: () {},
       ),
       body: RefreshIndicator(
-        onRefresh: () async =>
-            Future.delayed(Duration(milliseconds: 400), () => setState(() {})),
-        color: setTextColor,
-        backgroundColor: activeColorPrimary,
-        child: ListView.builder(
-          itemCount: ListerController.length,
-          itemBuilder: (BuildContext context, int position) {
-            return TableToDo(
-              position: position,
-              title: ListerController.getter(position),
-              fatherSetState: () => setState(() {}),
-            );
-          },
-        ),
-      ),
+          onRefresh: () async => Future.delayed(
+              Duration(milliseconds: 400), () => setState(() {})),
+          color: currentThemeLight ? Color(0xFF474747) : Color(0xFFFFFFFF),
+          child: ListView.builder(
+            itemCount: ListerController.length,
+            itemBuilder: (BuildContext context, int position) {
+              int id = ListerController.mainList[position];
+              if (id < 0) {
+                return Column(
+                  children: [
+                    FolderTitle(
+                        title: ListerController.databaseGroups[id]!.title),
+                    ListView.builder(
+                      itemCount:
+                          ListerController.databaseGroups[id]!.children.length,
+                      itemBuilder: (context, index) => TableToDo(
+                        id: id,
+                        title: ListerController.databaseNotes[id]!.title,
+                        fatherSetState: () => setState(() {}),
+                      ),
+                    )
+                  ],
+                );
+              } else {
+                return TableToDo(
+                  id: id,
+                  title: ListerController.databaseNotes[id]?.title,
+                  fatherSetState: () => setState(() {}),
+                );
+              }
+            },
+          )),
     );
   }
 }
 
 class TableToDo extends StatefulWidget {
   TableToDo({
-    this.position,
+    this.id,
     this.title,
     this.fatherSetState,
     Key? key,
   }) : super(key: key);
-  final position, title, fatherSetState;
+  final id, title, fatherSetState;
 
   @override
   _TableToDoState createState() =>
@@ -85,15 +102,15 @@ class _TableToDoState extends State<TableToDo> {
       dismissal: SlidableDismissal(
         child: SlidableDrawerDismissal(),
         onWillDismiss: (actionType) async {
-          ListerController.remove(widget.title);
+          ListerController.removeNote(widget.id);
           return true;
         },
         onDismissed: (actionType) {
-          ListerController.remove(widget.title);
+          ListerController.removeNote(widget.id);
           if (actionType!.index == 1) {
-            ListerController.deletedToDoCounterAdd();
+            ListerController.deleteNoteCounterAdd();
           } else if (actionType.index == 0) {
-            ListerController.doneToDoCounterAdd();
+            ListerController.doneNoteCounterAdd();
           }
           fatherSetState();
         },
@@ -109,9 +126,9 @@ class _TableToDoState extends State<TableToDo> {
         actionCount: 1,
         builder: (context, index, animation, step) {
           return IconSlideAction(
-            caption: 'Check',
+            caption: 'Выполнить',
             foregroundColor: Colors.white,
-            color: colorDones,
+            color: currentThemeLight ? Color(0xFF46CF68) : Color(0xFF34C759),
             iconWidget: Icon(
               Icons.check,
               color: Colors.white,
@@ -122,24 +139,25 @@ class _TableToDoState extends State<TableToDo> {
       secondaryActionDelegate: SlideActionBuilderDelegate(
           actionCount: 1,
           builder: (context, index, animation, step) => IconSlideAction(
-                caption: 'Delete',
-                color: Colors.red,
+                caption: 'Удалить',
+                color:
+                    currentThemeLight ? Color(0xFFFF534A) : Color(0xFFFF3B30),
                 foregroundColor: Colors.white,
                 icon: Icons.delete,
               )),
       child: Column(
         children: [
           Container(
-            color: backgroundColor,
+            color: currentThemeLight ? Color(0xFFEEEEEE) : Color(0xFF353535),
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
                 child: Text(
                   widget.title,
                   textDirection: TextDirection.ltr,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: setTextColor,
                       fontSize: MediaQuery.of(context).size.width < 400
                           ? MediaQuery.of(context).size.width / 16
                           : 400 / 16),
@@ -147,10 +165,7 @@ class _TableToDoState extends State<TableToDo> {
               ),
             ),
           ),
-          Divider(
-            height: 1,
-            color: Color(0xFF212121),
-          ),
+          Divider(height: 1),
         ],
       ),
     );
