@@ -18,10 +18,6 @@ class ListerController {
 
   static Future<dynamic> initialize() async {
     storage = await Hive.openBox(ToDoDatabaseName);
-    storage.put('mainList', []);
-    storage.put('databaseNotes', {});
-    storage.put('databaseGroup', {});
-    storage.put('counters', counters);
     mainList = storage.get('mainList') ?? [];
     databaseNotes = storage.get('databaseNotes') ?? {};
     databaseGroups = storage.get('databaseGroup') ?? {};
@@ -44,6 +40,7 @@ class ListerController {
     databaseNotes[id] = Note(id: id, title: title, groupId: groupId);
     mainList.add(id);
     storage.put('mainList', mainList);
+    storage.put('databaseNotes', databaseNotes);
   }
 
   static void editNote({required int id, String? newTitle, int? groupId}) {

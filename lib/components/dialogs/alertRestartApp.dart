@@ -5,7 +5,6 @@ import 'package:lister/variables.dart';
 
 Future<dynamic> alertRestartApp({
   required BuildContext context,
-  required Function setState,
 }) {
   return showDialog(
       context: context,
@@ -16,10 +15,16 @@ Future<dynamic> alertRestartApp({
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Для изменений перезапустите приложение!',
+              Text('Внимание',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: fontSize2,
+                  )),
+              SizedBox(height: 10),
+              Text('Для применения изменений перезапустите приложение!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: fontSize3,
                   )),
               SizedBox(height: 10),
               Row(

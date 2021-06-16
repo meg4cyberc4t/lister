@@ -22,13 +22,19 @@ void main() async {
   Hive.registerAdapter(GroupAdapter());
   await SettingsController.initialize();
   await ListerController.initialize();
+
   runApp(
     MaterialApp(
       theme: mainThemeLight,
       darkTheme: mainThemeDark,
-      themeMode: ThemeMode.system,
+      themeMode: (themeSettings == 'system')
+          ? ThemeMode.system
+          : (themeSettings == 'dark')
+              ? ThemeMode.dark
+              : ThemeMode.light,
       debugShowCheckedModeBanner: false,
       home: Lister(),
+      title: 'lister',
     ),
   );
 }

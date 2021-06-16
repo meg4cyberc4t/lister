@@ -17,7 +17,7 @@ class VersionPage extends StatelessWidget {
       ),
       body: Center(
         child: SingleChildScrollView(
-          child: Container(
+          child: Container( 
               width: MediaQuery.of(context).size.width * 0.8,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

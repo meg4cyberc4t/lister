@@ -4,6 +4,7 @@ import 'package:lister/components/MaterialButtonSettings.dart';
 import 'package:lister/components/MySwitchStatsSettings.dart';
 import 'package:lister/pages/settingsPages/developersPage.dart';
 import 'package:lister/pages/settingsPages/helpPage.dart';
+import 'package:lister/pages/settingsPages/themesPage.dart';
 import 'package:lister/pages/settingsPages/versionPage.dart';
 import 'package:lister/variables.dart';
 
@@ -25,8 +26,14 @@ class SettingsPage extends StatelessWidget {
         children: [
           FolderTitle(title: 'Общие'),
           MySwitchStatsSettings(title: 'Статистика'),
-          MaterialButtonSettings(title: 'Тема'),
-          MaterialButtonSettings(title: 'Шрифт'),
+          MaterialButtonSettings(
+            title: 'Тема',
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ThemesPage(),
+                )),
+          ),
           SizedBox(height: 10),
           FolderTitle(title: 'О сервисе'),
           MaterialButtonSettings(

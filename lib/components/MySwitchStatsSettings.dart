@@ -25,14 +25,14 @@ class _MySwitchStatsSettingsState extends State<MySwitchStatsSettings> {
           _switchValue = !_switchValue;
           SettingsController.setboolStats(_switchValue);
         });
-        alertRestartApp(context: context, setState: () => setState(() {}));
+        alertRestartApp(context: context);
       },
       onLongPress: () {
         setState(() {
           _switchValue = !_switchValue;
           SettingsController.setboolStats(_switchValue);
         });
-        alertRestartApp(context: context, setState: () => setState(() {}));
+        alertRestartApp(context: context);
       },
       child: Container(
         padding: EdgeInsets.zero,
@@ -63,8 +63,7 @@ class _MySwitchStatsSettingsState extends State<MySwitchStatsSettings> {
                           _switchValue = value;
                           SettingsController.setboolStats(_switchValue);
                         });
-                        alertRestartApp(
-                            context: context, setState: () => setState(() {}));
+                        alertRestartApp(context: context);
                       })
                 ],
               ),

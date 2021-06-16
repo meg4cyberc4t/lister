@@ -44,7 +44,6 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     FolderTitle(
                         title: ListerController.databaseGroups[id]!.title),
-                    // ListerController.databaseGroups[id].children
                     ListView.builder(
                       itemCount:
                           ListerController.databaseGroups[id]!.children.length,
@@ -127,7 +126,7 @@ class _TableToDoState extends State<TableToDo> {
         actionCount: 1,
         builder: (context, index, animation, step) {
           return IconSlideAction(
-            caption: 'Check',
+            caption: 'Выполнить',
             foregroundColor: Colors.white,
             color: currentThemeLight ? Color(0xFF46CF68) : Color(0xFF34C759),
             iconWidget: Icon(
@@ -140,7 +139,7 @@ class _TableToDoState extends State<TableToDo> {
       secondaryActionDelegate: SlideActionBuilderDelegate(
           actionCount: 1,
           builder: (context, index, animation, step) => IconSlideAction(
-                caption: 'Delete',
+                caption: 'Удалить',
                 color:
                     currentThemeLight ? Color(0xFFFF534A) : Color(0xFFFF3B30),
                 foregroundColor: Colors.white,
@@ -152,7 +151,8 @@ class _TableToDoState extends State<TableToDo> {
             color: currentThemeLight ? Color(0xFFEEEEEE) : Color(0xFF353535),
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
                 child: Text(
                   widget.title,
                   textDirection: TextDirection.ltr,
