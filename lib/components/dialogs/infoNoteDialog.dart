@@ -1,40 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:lister/components/MyOutlinedButton.dart';
-import 'package:lister/components/MyTextField.dart';
 import 'package:lister/components/controller.dart';
 import 'package:lister/variables.dart';
 
-Future<dynamic> createAdderNoteDialog(BuildContext context, setState) {
+Future<dynamic> infoNoteDialog(BuildContext context, int id) {
   return showDialog(
       context: context,
       builder: (context) {
-        TextEditingController _textEditingController = TextEditingController();
-        Function submitFunction = () {
-          String text = _textEditingController.text.trim();
-          if (text.isNotEmpty) {
-            ListerController.addNote(title: text, createTime: DateTime.now());
-            setState(() {});
-            Navigator.of(context).pop(false);
-          } else {
-            // SnackBar(content: Snack)
-            _textEditingController.text = '';
-          }
-        };
         return Dialog(
           child: Container(
             padding: EdgeInsets.all(10),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Создание',
+                Text('Сведения',
                     style: TextStyle(
                       fontSize: fontSize2,
                     )),
                 SizedBox(height: 10),
-                MyTextField(
-                  labeltext: 'Название задачи',
-                  textEditingController: _textEditingController,
-                  onSubmitted: submitFunction,
+                Text(
+                  'Название задачи: ${ListerController.databaseNotes[id].title}',
+                  style: TextStyle(fontSize: fontSize3),
+                ),
+                Text(
+                  'Время создания: ${ListerController.databaseNotes[id].createTime.hour}:${ListerController.databaseNotes[id].createTime.minute}',
+                  style: TextStyle(fontSize: fontSize3),
+                ),
+                Text(
+                  'Дата создания: ${ListerController.databaseNotes[id].createTime.day}.${ListerController.databaseNotes[id].createTime.month}.${ListerController.databaseNotes[id].createTime.year}',
+                  style: TextStyle(fontSize: fontSize3),
                 ),
                 SizedBox(height: 10),
                 Row(
@@ -44,10 +38,6 @@ Future<dynamic> createAdderNoteDialog(BuildContext context, setState) {
                       title: 'Назад',
                       submitFunction: () => Navigator.of(context).pop(false),
                     ),
-                    MyOutlinedButton(
-                      title: 'Далее',
-                      submitFunction: submitFunction,
-                    )
                   ],
                 )
               ],

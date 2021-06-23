@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:lister/components/FolderTitle.dart';
 import 'package:lister/components/dialogs/createNoteDialog.dart';
 import 'package:lister/components/ElevatedFloatingActionButton.dart';
 import 'package:lister/components/controller.dart';
+import 'package:lister/components/dialogs/editNoteDialog.dart';
+import 'package:lister/components/dialogs/infoNoteDialog.dart';
 import 'package:lister/variables.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -33,35 +34,18 @@ class _HomePageState extends State<HomePage> {
       ),
       body: RefreshIndicator(
           onRefresh: () async => Future.delayed(
-              Duration(milliseconds: 400), () => setState(() {})),
+              Duration(milliseconds: 400), () => globalSetState(() {})),
           color: currentThemeLight ? Color(0xFF474747) : Color(0xFFFFFFFF),
           child: ListView.builder(
             itemCount: ListerController.length,
             itemBuilder: (BuildContext context, int position) {
               int id = ListerController.mainList[position];
-              if (id < 0) {
-                return Column(
-                  children: [
-                    FolderTitle(
-                        title: ListerController.databaseGroups[id]!.title),
-                    ListView.builder(
-                      itemCount:
-                          ListerController.databaseGroups[id]!.children.length,
-                      itemBuilder: (context, index) => TableToDo(
-                        id: id,
-                        title: ListerController.databaseNotes[id]!.title,
-                        fatherSetState: () => setState(() {}),
-                      ),
-                    )
-                  ],
-                );
-              } else {
-                return TableToDo(
-                  id: id,
-                  title: ListerController.databaseNotes[id]?.title,
-                  fatherSetState: () => setState(() {}),
-                );
-              }
+              return TableToDo(
+                key: Key(id.toString()),
+                id: id,
+                title: ListerController.databaseNotes[id]?.title,
+                fatherSetState: globalSetState,
+              );
             },
           )),
     );
@@ -73,7 +57,7 @@ class TableToDo extends StatefulWidget {
     this.id,
     this.title,
     this.fatherSetState,
-    Key? key,
+    required Key key,
   }) : super(key: key);
   final id, title, fatherSetState;
 
@@ -89,9 +73,7 @@ class _TableToDoState extends State<TableToDo> {
   Widget build(BuildContext context) {
     SlidableController _slidableController =
         SlidableController(onSlideAnimationChanged: (value) {
-      if (value == null) {
-        fatherSetState();
-      }
+      if (value == null) fatherSetState(() {});
     });
     return Slidable.builder(
       key: Key(widget.title),
@@ -112,7 +94,7 @@ class _TableToDoState extends State<TableToDo> {
           } else if (actionType.index == 0) {
             ListerController.doneNoteCounterAdd();
           }
-          fatherSetState();
+          fatherSetState(() {});
         },
         dismissThresholds: {
           SlideActionType.secondary: 0.2,
@@ -145,29 +127,38 @@ class _TableToDoState extends State<TableToDo> {
                 foregroundColor: Colors.white,
                 icon: Icons.delete,
               )),
-      child: Column(
-        children: [
-          Container(
-            color: currentThemeLight ? Color(0xFFEEEEEE) : Color(0xFF353535),
-            child: Center(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
-                child: Text(
-                  widget.title,
-                  textDirection: TextDirection.ltr,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width < 400
-                          ? MediaQuery.of(context).size.width / 16
-                          : 400 / 16),
+      child: MaterialButton(
+        color: currentThemeLight ? Color(0xFFEEEEEE) : Color(0xFF353535),
+        onPressed: () => editNoteDialog(context, fatherSetState, widget.id),
+        onLongPress: () => infoNoteDialog(context, widget.id),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 8.0),
+                  child: Text(
+                    widget.title,
+                    textDirection: TextDirection.ltr,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width < 400
+                            ? MediaQuery.of(context).size.width / 16
+                            : 400 / 16),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ),
-          Divider(height: 1),
-        ],
+          ],
+        ),
       ),
     );
   }
+}
+
+String getTitleTime(DateTime datetime) {
+  return '22 декабря';
 }

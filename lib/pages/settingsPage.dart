@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lister/components/FolderTitle.dart';
 import 'package:lister/components/MaterialButtonSettings.dart';
 import 'package:lister/components/MySwitchStatsSettings.dart';
+import 'package:lister/components/controller.dart';
+import 'package:lister/components/models/counters.dart';
 import 'package:lister/pages/settingsPages/developersPage.dart';
 import 'package:lister/pages/settingsPages/helpPage.dart';
 import 'package:lister/pages/settingsPages/themesPage.dart';
@@ -51,12 +53,19 @@ class SettingsPage extends StatelessWidget {
                     builder: (context) => HelpPage(),
                   ))),
           MaterialButtonSettings(
-              title: 'Разработчики',
-              onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DevelopersPage(),
-                  ))),
+            title: 'Разработчики',
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DevelopersPage(),
+                )),
+            onLongPress: () {
+              ListerController.storage.put('mainList', []);
+              ListerController.storage.put('databaseNotes', {});
+              ListerController.storage.put('databaseGroup', {});
+              ListerController.storage.put('counters', Counters());
+            },
+          ),
           SizedBox(height: 10),
         ],
       ),

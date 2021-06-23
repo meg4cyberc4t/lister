@@ -9,6 +9,6 @@ class Note extends HiveObject {
   @HiveField(1)
   final int id;
   @HiveField(2)
-  int? groupId;
-  Note({required this.title, required this.id, this.groupId});
+  DateTime createTime;
+  Note({required this.title, required this.id, required this.createTime});
 }

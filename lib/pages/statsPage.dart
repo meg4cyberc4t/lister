@@ -44,8 +44,8 @@ class _StatsPageState extends State<StatsPage> {
                       ListerController.counters.doneNotes.toDouble(),
                   'Удалённые - ${ListerController.counters.deletedNotes}':
                       ListerController.counters.deletedNotes.toDouble(),
-                  'В данный момент - ${ListerController.lengthAll}':
-                      ListerController.lengthAll.toDouble(),
+                  'В данный момент - ${ListerController.length}':
+                      ListerController.length.toDouble(),
                 },
                 animationDuration: Duration(seconds: 1),
                 centerText: 'Задачи',
@@ -76,7 +76,7 @@ class _StatsPageState extends State<StatsPage> {
               Text(
                 (ListerController.counters.deletedNotes +
                         ListerController.counters.doneNotes +
-                        ListerController.lengthAll)
+                        ListerController.length)
                     .toString(),
               ),
               SizedBox(height: 30),

@@ -19,7 +19,7 @@ class NoteAdapter extends TypeAdapter<Note> {
     return Note(
       title: fields[0] as String,
       id: fields[1] as int,
-      groupId: fields[2] as int?,
+      createTime: fields[2] as DateTime,
     );
   }
 
@@ -32,7 +32,7 @@ class NoteAdapter extends TypeAdapter<Note> {
       ..writeByte(1)
       ..write(obj.id)
       ..writeByte(2)
-      ..write(obj.groupId);
+      ..write(obj.createTime);
   }
 
   @override
@@ -41,5 +41,5 @@ class NoteAdapter extends TypeAdapter<Note> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Note && runtimeType == other.runtimeType && typeId == 0;
+      other is Note && runtimeType == other.runtimeType && typeId == 3;
 }

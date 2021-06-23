@@ -4,15 +4,16 @@ import 'package:lister/components/MyTextField.dart';
 import 'package:lister/components/controller.dart';
 import 'package:lister/variables.dart';
 
-Future<dynamic> createAdderNoteDialog(BuildContext context, setState) {
+Future<dynamic> editNoteDialog(BuildContext context, setState, int id) {
   return showDialog(
       context: context,
       builder: (context) {
-        TextEditingController _textEditingController = TextEditingController();
+        TextEditingController _textEditingController = TextEditingController(
+            text: ListerController.databaseNotes[id].title);
         Function submitFunction = () {
           String text = _textEditingController.text.trim();
           if (text.isNotEmpty) {
-            ListerController.addNote(title: text, createTime: DateTime.now());
+            ListerController.editNote(id: id, newTitle: text);
             setState(() {});
             Navigator.of(context).pop(false);
           } else {
@@ -26,7 +27,7 @@ Future<dynamic> createAdderNoteDialog(BuildContext context, setState) {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Создание',
+                Text('Редактирование',
                     style: TextStyle(
                       fontSize: fontSize2,
                     )),

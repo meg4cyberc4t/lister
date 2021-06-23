@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lister/components/controller.dart';
-import 'package:lister/components/models/group.dart';
 import 'package:lister/components/settingsController.dart';
 import 'package:lister/pages/homePage.dart';
 import 'package:lister/pages/settingsPage.dart';
@@ -13,13 +12,11 @@ import 'package:flutter/services.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'components/models/counters.dart';
 import 'components/models/note.dart';
-import 'components/models/group.dart';
 
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(CountersAdapter());
   Hive.registerAdapter(NoteAdapter());
-  Hive.registerAdapter(GroupAdapter());
   await SettingsController.initialize();
   await ListerController.initialize();
   runApp(

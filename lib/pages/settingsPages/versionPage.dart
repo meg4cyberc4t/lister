@@ -17,13 +17,13 @@ class VersionPage extends StatelessWidget {
       ),
       body: Center(
         child: SingleChildScrollView(
-          child: Container( 
+          child: Container(
               width: MediaQuery.of(context).size.width * 0.8,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Text('Версия 1.0.0 от 14.06.2021'),
+                  Text('Версия 1.0.2+3 от 22.06.2021'),
                   SizedBox(height: 20),
                   Text('Открытый исходный код по ссылке:'),
                   TextButton(
