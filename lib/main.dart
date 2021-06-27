@@ -9,9 +9,9 @@ import 'package:lister/pages/settingsPage.dart';
 import 'package:lister/pages/statsPage.dart';
 import 'package:lister/variables.dart';
 import 'package:flutter/services.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'components/models/counters.dart';
 import 'components/models/note.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -20,7 +20,24 @@ void main() async {
   await SettingsController.initialize();
   await ListerController.initialize();
   runApp(
-    MaterialApp(
+    Main(),
+  );
+}
+
+class Main extends StatefulWidget {
+  const Main({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _MainState createState() => _MainState();
+}
+
+class _MainState extends State<Main> {
+  @override
+  Widget build(BuildContext context) {
+    globalSetState = setState;
+    return MaterialApp(
       theme: mainThemeLight,
       darkTheme: mainThemeDark,
       themeMode: (themeSettings == 'system')
@@ -31,8 +48,8 @@ void main() async {
       debugShowCheckedModeBanner: false,
       home: Lister(),
       title: 'Lister',
-    ),
-  );
+    );
+  }
 }
 
 class Lister extends StatefulWidget {
@@ -41,8 +58,15 @@ class Lister extends StatefulWidget {
 }
 
 class _ListerState extends State<Lister> {
-  PersistentTabController _persistentTabController =
-      PersistentTabController(initialIndex: 1);
+  PageController _mainPageViewController = PageController(initialPage: 1);
+
+  @override
+  void dispose() {
+    _mainPageViewController.dispose();
+    super.dispose();
+  }
+
+  int _selectedPage = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -50,14 +74,13 @@ class _ListerState extends State<Lister> {
     SystemChrome.setSystemUIOverlayStyle(currentThemeLight
         ? SystemUiOverlayStyle.light
         : SystemUiOverlayStyle.dark);
-    globalSetState = setState;
+
     return Scaffold(
-      body: PersistentTabView(
-        context,
-        controller: _persistentTabController,
-        backgroundColor:
-            currentThemeLight ? Color(0xFF474747) : Color(0xFF212121),
-        screens: boolStats
+      backgroundColor: Colors.black,
+      body: PageView(
+        scrollDirection: Axis.horizontal,
+        controller: _mainPageViewController,
+        children: SettingsController.getboolStats
             ? [
                 StatsPage(),
                 HomePage(),
@@ -67,52 +90,117 @@ class _ListerState extends State<Lister> {
                 HomePage(),
                 SettingsPage(),
               ],
-        items: boolStats
-            ? [
-                PersistentBottomNavBarItem(
-                  icon: Icon(Icons.query_stats),
-                  title: 'Статистика',
-                  activeColorPrimary: (currentThemeLight
-                          ? defaultLightColors[3]
-                          : defaultDarkColors[3]) ??
-                      Color(0),
-                ),
-                PersistentBottomNavBarItem(
-                  icon: Icon(Icons.home),
-                  title: 'Задачи',
-                  activeColorPrimary: (currentThemeLight
-                          ? defaultLightColors[3]
-                          : defaultDarkColors[3]) ??
-                      Color(0),
-                ),
-                PersistentBottomNavBarItem(
-                  icon: Icon(Icons.settings),
-                  title: 'Настройки',
-                  activeColorPrimary: (currentThemeLight
-                          ? defaultLightColors[3]
-                          : defaultDarkColors[3]) ??
-                      Color(0),
-                ),
-              ]
-            : [
-                PersistentBottomNavBarItem(
-                  icon: Icon(Icons.home),
-                  title: 'Задачи',
-                  activeColorPrimary: (currentThemeLight
-                          ? defaultLightColors[3]
-                          : defaultDarkColors[3]) ??
-                      Color(0),
-                ),
-                PersistentBottomNavBarItem(
-                  icon: Icon(Icons.settings),
-                  title: 'Настройки',
-                  activeColorPrimary: (currentThemeLight
-                          ? defaultLightColors[3]
-                          : defaultDarkColors[3]) ??
-                      Color(0),
-                ),
-              ],
-        confineInSafeArea: true,
+        onPageChanged: (int value) {
+          setState(() => _selectedPage = value);
+        },
+      ),
+      bottomNavigationBar: MyBottomNavigationBar(
+          mainPageViewController: _mainPageViewController,
+          selectedPage: _selectedPage),
+    );
+  }
+}
+
+class MyBottomNavigationBar extends StatelessWidget {
+  const MyBottomNavigationBar({
+    Key? key,
+    required PageController mainPageViewController,
+    required int selectedPage,
+  })  : _mainPageViewController = mainPageViewController,
+        selectedPage = selectedPage,
+        super(key: key);
+
+  final PageController _mainPageViewController;
+  final int selectedPage;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: currentThemeLight ? Color(0xFF474747) : Color(0xFF212121),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 20,
+            color: Colors.black.withOpacity(.1),
+          )
+        ],
+      ),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+          child: GNav(
+            rippleColor: currentThemeLight
+                ? Color(0xFFEEEEEE).withOpacity(0.3)
+                : Color(0xFF353535).withOpacity(0.3),
+            hoverColor: currentThemeLight
+                ? Color(0xFFEEEEEE).withOpacity(0.7)
+                : Color(0xFF353535).withOpacity(0.7),
+            gap: 8,
+            activeColor: (currentThemeLight
+                    ? defaultLightColors[3]
+                    : defaultDarkColors[3]) ??
+                Color(0),
+            iconSize: 24,
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            duration: Duration(milliseconds: 200),
+            tabBackgroundColor: currentThemeLight
+                ? Color(0xFFEEEEEE).withOpacity(0.2)
+                : Color(0xFF353535),
+            color: (currentThemeLight
+                    ? defaultLightColors[3]
+                    : defaultDarkColors[3]) ??
+                Color(0),
+            tabs: SettingsController.getboolStats
+                ? [
+                    GButton(
+                      icon: Icons.query_stats,
+                      iconActiveColor:
+                          currentThemeLight ? defaultLightColors[1] : null,
+                      textColor:
+                          currentThemeLight ? defaultLightColors[1] : null,
+                      text: 'Статистика',
+                    ),
+                    GButton(
+                      icon: Icons.home,
+                      text: 'Задачи',
+                      iconActiveColor:
+                          currentThemeLight ? defaultLightColors[1] : null,
+                      textColor:
+                          currentThemeLight ? defaultLightColors[1] : null,
+                    ),
+                    GButton(
+                      icon: Icons.settings,
+                      text: 'Настройки',
+                      iconActiveColor:
+                          currentThemeLight ? defaultLightColors[1] : null,
+                      textColor:
+                          currentThemeLight ? defaultLightColors[1] : null,
+                    ),
+                  ]
+                : [
+                    GButton(
+                      icon: Icons.home,
+                      text: 'Задачи',
+                      iconActiveColor:
+                          currentThemeLight ? defaultLightColors[1] : null,
+                      textColor:
+                          currentThemeLight ? defaultLightColors[1] : null,
+                    ),
+                    GButton(
+                      icon: Icons.settings,
+                      text: 'Настройки',
+                      iconActiveColor:
+                          currentThemeLight ? defaultLightColors[1] : null,
+                      textColor:
+                          currentThemeLight ? defaultLightColors[1] : null,
+                    ),
+                  ],
+            selectedIndex: selectedPage,
+            onTabChange: (index) => _mainPageViewController.jumpToPage(
+              index,
+            ),
+          ),
+        ),
       ),
     );
   }

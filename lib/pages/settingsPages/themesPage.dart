@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:lister/components/dialogs/alertRestartApp.dart';
 import 'package:lister/components/settingsController.dart';
 import 'package:lister/variables.dart';
 
-class ThemesPage extends StatelessWidget {
+class ThemesPage extends StatefulWidget {
   const ThemesPage({Key? key}) : super(key: key);
 
   @override
+  _ThemesPageState createState() => _ThemesPageState();
+}
+
+class _ThemesPageState extends State<ThemesPage> {
+  String activeTheme = SettingsController.getThemeSettings;
+  var thisThemeLight;
+
+  @override
   Widget build(BuildContext context) {
-    String activeTheme = SettingsController.getThemeSettings;
+    thisThemeLight = (activeTheme == 'system')
+        ? Theme.of(context).brightness == Brightness.light
+        : activeTheme == 'light';
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -31,31 +40,40 @@ class ThemesPage extends StatelessWidget {
                       title: 'Светлая',
                       active: activeTheme == 'light',
                       onPressed: () {
-                        globalSetState(() {
-                          SettingsController.setThemeSettings('light');
-                          alertRestartApp(context: context);
-                        });
-                      }),
+                        if (activeTheme != 'light')
+                          globalSetState(() {
+                            SettingsController.setThemeSettings('light');
+                            themeSettings = 'light';
+                            activeTheme = 'light';
+                          });
+                      },
+                      thisThemeLight: thisThemeLight),
                   SizedBox(height: 10),
                   ThemesSettingsButton(
                       title: 'Тёмная',
                       active: activeTheme == 'dark',
                       onPressed: () {
-                        globalSetState(() {
-                          SettingsController.setThemeSettings('dark');
-                          alertRestartApp(context: context);
-                        });
-                      }),
+                        if (activeTheme != 'dark')
+                          globalSetState(() {
+                            SettingsController.setThemeSettings('dark');
+                            themeSettings = 'dark';
+                            activeTheme = 'dark';
+                          });
+                      },
+                      thisThemeLight: thisThemeLight),
                   SizedBox(height: 10),
                   ThemesSettingsButton(
                       title: 'Системная',
                       active: activeTheme == 'system',
                       onPressed: () {
-                        globalSetState(() {
-                          SettingsController.setThemeSettings('system');
-                          alertRestartApp(context: context);
-                        });
-                      }),
+                        if (activeTheme != 'system')
+                          globalSetState(() {
+                            SettingsController.setThemeSettings('system');
+                            themeSettings = 'system';
+                            activeTheme = 'system';
+                          });
+                      },
+                      thisThemeLight: thisThemeLight),
                 ],
               )),
         ),
@@ -70,20 +88,22 @@ class ThemesSettingsButton extends StatelessWidget {
     required this.title,
     required this.active,
     required this.onPressed,
+    required this.thisThemeLight,
   }) : super(key: key);
 
   final title;
   final bool active;
   final Function onPressed;
+  final thisThemeLight;
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: (active)
           ? BoxDecoration(
               border: Border.all(
-                  color: currentThemeLight
-                      ? Color(0xFF212121)
-                      : Color(0xFFFFFFFF)))
+                  color:
+                      thisThemeLight ? Color(0xFF212121) : Color(0xFFFFFFFF)),
+            )
           : BoxDecoration(),
       child: MaterialButton(
         onPressed: () => onPressed(),

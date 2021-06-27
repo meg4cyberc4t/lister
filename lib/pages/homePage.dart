@@ -36,7 +36,8 @@ class _HomePageState extends State<HomePage> {
           onRefresh: () async => Future.delayed(
               Duration(milliseconds: 400), () => globalSetState(() {})),
           color: currentThemeLight ? Color(0xFF474747) : Color(0xFFFFFFFF),
-          child: ListView.builder(
+          child: ListView.separated(
+            separatorBuilder: (context, index) => SizedBox(height: 5),
             itemCount: ListerController.length,
             itemBuilder: (BuildContext context, int position) {
               int id = ListerController.mainList[position];
@@ -140,14 +141,18 @@ class _TableToDoState extends State<TableToDo> {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 10.0, horizontal: 8.0),
-                  child: Text(
-                    widget.title,
-                    textDirection: TextDirection.ltr,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width < 400
-                            ? MediaQuery.of(context).size.width / 16
-                            : 400 / 16),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: Text(
+                      widget.title,
+                      overflow: TextOverflow.clip,
+                      textDirection: TextDirection.ltr,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width < 400
+                              ? MediaQuery.of(context).size.width / 16
+                              : 400 / 16),
+                    ),
                   ),
                 ),
               ],
@@ -157,8 +162,4 @@ class _TableToDoState extends State<TableToDo> {
       ),
     );
   }
-}
-
-String getTitleTime(DateTime datetime) {
-  return '22 декабря';
 }

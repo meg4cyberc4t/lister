@@ -21,14 +21,17 @@ Future<dynamic> infoNoteDialog(BuildContext context, int id) {
                 Text(
                   'Название задачи: ${ListerController.databaseNotes[id].title}',
                   style: TextStyle(fontSize: fontSize3),
+                  textAlign: TextAlign.center,
                 ),
                 Text(
                   'Время создания: ${ListerController.databaseNotes[id].createTime.hour}:${ListerController.databaseNotes[id].createTime.minute}',
                   style: TextStyle(fontSize: fontSize3),
+                  textAlign: TextAlign.center,
                 ),
                 Text(
                   'Дата создания: ${ListerController.databaseNotes[id].createTime.day}.${ListerController.databaseNotes[id].createTime.month}.${ListerController.databaseNotes[id].createTime.year}',
                   style: TextStyle(fontSize: fontSize3),
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 10),
                 Row(

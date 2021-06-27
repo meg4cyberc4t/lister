@@ -39,6 +39,7 @@ class ListerController {
     mainList.add(id);
     storage.put('mainList', mainList);
     storage.put('databaseNotes', databaseNotes);
+    storage.put('counters', counters);
   }
 
   static void editNote({required int id, String? newTitle, int? groupId}) {
