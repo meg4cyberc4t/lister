@@ -27,8 +27,9 @@ Future<dynamic> createAdderNoteDialog(BuildContext context, setState) {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text('Создание',
+                    overflow: TextOverflow.fade,
                     style: TextStyle(
-                      fontSize: fontSize2,
+                      fontSize: fontSize1,
                     )),
                 SizedBox(height: 10),
                 MyTextField(

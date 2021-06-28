@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lister/components/Dialogs/correctionDialog.dart';
-import 'package:lister/components/ElevatedFloatingActionButton.dart';
 import 'package:lister/components/controller.dart';
 import 'package:lister/variables.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -20,17 +18,10 @@ class _StatsPageState extends State<StatsPage> {
       appBar: AppBar(
         title: Text(
           'Статистика',
-          style: TextStyle(fontSize: fontSize2),
+          style: TextStyle(fontSize: fontSize1),
         ),
         centerTitle: true,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: ElevatedFloatingActionButton(
-          title: 'Обновить',
-          onPressed: () => setState(() {}),
-          onLongPress: () {
-            correctionDialog(context: context, setState: setState);
-          }),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -55,29 +46,43 @@ class _StatsPageState extends State<StatsPage> {
                 initialAngleInDegree: 0,
                 legendOptions: LegendOptions(
                     showLegendsInRow: false,
+                    showLegends: true,
                     legendPosition: LegendPosition.bottom,
                     legendShape: BoxShape.circle,
-                    legendTextStyle: TextStyle(fontFamily: fontFamily)),
+                    legendTextStyle: TextStyle(
+                      fontFamily: fontFamily,
+                      fontSize: fontSize3,
+                    )),
                 colorList: [
-                  currentThemeLight ? Color(0xFF46CF68) : Color(0xFF34C759),
-                  currentThemeLight ? Color(0xFFFF534A) : Color(0xFFFF3B30),
-                  currentThemeLight ? Color(0xFFEFEF86) : Color(0xFFD1D1D6),
+                  currentThemeLight
+                      ? defaultLightColors[6]!
+                      : defaultDarkColors[6]!,
+                  currentThemeLight
+                      ? defaultLightColors[4]!
+                      : defaultDarkColors[4]!,
+                  currentThemeLight
+                      ? defaultLightColors[5]!
+                      : defaultDarkColors[5]!,
                 ],
                 chartValuesOptions: ChartValuesOptions(
                   showChartValueBackground: true,
                   showChartValues: true,
                   showChartValuesInPercentage: true,
+                  chartValueStyle:
+                      TextStyle(fontSize: fontSize3, color: Colors.black),
                 ),
               ),
               SizedBox(height: 10),
               Text(
                 'Всего задач:',
+                style: TextStyle(fontSize: fontSize3),
               ),
               Text(
                 (ListerController.counters.deletedNotes +
                         ListerController.counters.doneNotes +
                         ListerController.length)
                     .toString(),
+                style: TextStyle(fontSize: fontSize3),
               ),
               SizedBox(height: 30),
             ],

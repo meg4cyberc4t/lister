@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(
           'Задачи',
-          style: TextStyle(fontSize: fontSize2),
+          style: TextStyle(fontSize: fontSize1),
         ),
         centerTitle: true,
       ),
@@ -35,7 +35,9 @@ class _HomePageState extends State<HomePage> {
       body: RefreshIndicator(
           onRefresh: () async => Future.delayed(
               Duration(milliseconds: 400), () => globalSetState(() {})),
-          color: currentThemeLight ? Color(0xFF474747) : Color(0xFFFFFFFF),
+          color: currentThemeLight
+              ? defaultLightColors[2]!
+              : defaultDarkColors[2]!,
           child: ListView.separated(
             separatorBuilder: (context, index) => SizedBox(height: 5),
             itemCount: ListerController.length,
@@ -111,7 +113,9 @@ class _TableToDoState extends State<TableToDo> {
           return IconSlideAction(
             caption: 'Выполнить',
             foregroundColor: Colors.white,
-            color: currentThemeLight ? Color(0xFF46CF68) : Color(0xFF34C759),
+            color: currentThemeLight
+                ? defaultLightColors[6]!
+                : defaultDarkColors[6]!,
             iconWidget: Icon(
               Icons.check,
               color: Colors.white,
@@ -123,15 +127,17 @@ class _TableToDoState extends State<TableToDo> {
           actionCount: 1,
           builder: (context, index, animation, step) => IconSlideAction(
                 caption: 'Удалить',
-                color:
-                    currentThemeLight ? Color(0xFFFF534A) : Color(0xFFFF3B30),
+                color: currentThemeLight
+                    ? defaultLightColors[4]!
+                    : defaultDarkColors[4]!,
                 foregroundColor: Colors.white,
                 icon: Icons.delete,
               )),
       child: MaterialButton(
-        color: currentThemeLight ? Color(0xFFEEEEEE) : Color(0xFF353535),
-        onPressed: () => editNoteDialog(context, fatherSetState, widget.id),
-        onLongPress: () => infoNoteDialog(context, widget.id),
+        color:
+            currentThemeLight ? defaultLightColors[1]! : defaultDarkColors[1]!,
+        onPressed: () => infoNoteDialog(context, widget.id),
+        onLongPress: () => editNoteDialog(context, fatherSetState, widget.id),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -148,10 +154,7 @@ class _TableToDoState extends State<TableToDo> {
                       overflow: TextOverflow.clip,
                       textDirection: TextDirection.ltr,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width < 400
-                              ? MediaQuery.of(context).size.width / 16
-                              : 400 / 16),
+                      style: TextStyle(fontSize: fontSize2),
                     ),
                   ),
                 ),

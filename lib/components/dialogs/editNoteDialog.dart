@@ -28,8 +28,9 @@ Future<dynamic> editNoteDialog(BuildContext context, setState, int id) {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text('Редактирование',
+                    overflow: TextOverflow.fade,
                     style: TextStyle(
-                      fontSize: fontSize2,
+                      fontSize: fontSize1,
                     )),
                 SizedBox(height: 10),
                 MyTextField(

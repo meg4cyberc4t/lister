@@ -11,7 +11,7 @@ class HelpPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Поддержка / Обратная связь',
-          style: TextStyle(fontSize: fontSize2),
+          style: TextStyle(fontSize: fontSize1),
         ),
         centerTitle: true,
       ),
@@ -26,10 +26,15 @@ class HelpPage extends StatelessWidget {
                   Text(
                     """В случае возникновения ошибки или идей по улучшению приложения, обращайтесь по адресу:""",
                     textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: fontSize2),
                   ),
                   TextButton(
                     onPressed: () => launch('mailto:listerApp@yandex.com'),
-                    child: Text('listerApp@yandex.com'),
+                    child: Text(
+                      'listerApp@yandex.com',
+                      style: TextStyle(fontSize: fontSize2),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ],
               )),

@@ -70,26 +70,21 @@ class _ListerState extends State<Lister> {
 
   @override
   Widget build(BuildContext context) {
+    SettingsController.setFontFromScreenWidth(MediaQuery.of(context).size);
     currentThemeLight = Theme.of(context).brightness == Brightness.light;
     SystemChrome.setSystemUIOverlayStyle(currentThemeLight
         ? SystemUiOverlayStyle.light
         : SystemUiOverlayStyle.dark);
-
     return Scaffold(
       backgroundColor: Colors.black,
       body: PageView(
         scrollDirection: Axis.horizontal,
         controller: _mainPageViewController,
-        children: SettingsController.getboolStats
-            ? [
-                StatsPage(),
-                HomePage(),
-                SettingsPage(),
-              ]
-            : [
-                HomePage(),
-                SettingsPage(),
-              ],
+        children: [
+          StatsPage(),
+          HomePage(),
+          SettingsPage(),
+        ],
         onPageChanged: (int value) {
           setState(() => _selectedPage = value);
         },
@@ -117,7 +112,7 @@ class MyBottomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: currentThemeLight ? Color(0xFF474747) : Color(0xFF212121),
+        color: currentThemeLight ? defaultLightColors[0] : defaultDarkColors[0],
         boxShadow: [
           BoxShadow(
             blurRadius: 20,
@@ -130,75 +125,51 @@ class MyBottomNavigationBar extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
           child: GNav(
             rippleColor: currentThemeLight
-                ? Color(0xFFEEEEEE).withOpacity(0.3)
-                : Color(0xFF353535).withOpacity(0.3),
+                ? defaultLightColors[1]!.withOpacity(.3)
+                : defaultDarkColors[1]!.withOpacity(.3),
             hoverColor: currentThemeLight
-                ? Color(0xFFEEEEEE).withOpacity(0.7)
-                : Color(0xFF353535).withOpacity(0.7),
+                ? defaultLightColors[1]!.withOpacity(.7)
+                : defaultDarkColors[1]!.withOpacity(.7),
             gap: 8,
             activeColor: (currentThemeLight
                     ? defaultLightColors[3]
                     : defaultDarkColors[3]) ??
                 Color(0),
-            iconSize: 24,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            iconSize: iconsBottomNavigationBarSize,
             duration: Duration(milliseconds: 200),
             tabBackgroundColor: currentThemeLight
-                ? Color(0xFFEEEEEE).withOpacity(0.2)
-                : Color(0xFF353535),
+                ? defaultLightColors[1]!.withOpacity(0.2)
+                : defaultDarkColors[1]!,
             color: (currentThemeLight
                     ? defaultLightColors[3]
                     : defaultDarkColors[3]) ??
                 Color(0),
-            tabs: SettingsController.getboolStats
-                ? [
-                    GButton(
-                      icon: Icons.query_stats,
-                      iconActiveColor:
-                          currentThemeLight ? defaultLightColors[1] : null,
-                      textColor:
-                          currentThemeLight ? defaultLightColors[1] : null,
-                      text: 'Статистика',
-                    ),
-                    GButton(
-                      icon: Icons.home,
-                      text: 'Задачи',
-                      iconActiveColor:
-                          currentThemeLight ? defaultLightColors[1] : null,
-                      textColor:
-                          currentThemeLight ? defaultLightColors[1] : null,
-                    ),
-                    GButton(
-                      icon: Icons.settings,
-                      text: 'Настройки',
-                      iconActiveColor:
-                          currentThemeLight ? defaultLightColors[1] : null,
-                      textColor:
-                          currentThemeLight ? defaultLightColors[1] : null,
-                    ),
-                  ]
-                : [
-                    GButton(
-                      icon: Icons.home,
-                      text: 'Задачи',
-                      iconActiveColor:
-                          currentThemeLight ? defaultLightColors[1] : null,
-                      textColor:
-                          currentThemeLight ? defaultLightColors[1] : null,
-                    ),
-                    GButton(
-                      icon: Icons.settings,
-                      text: 'Настройки',
-                      iconActiveColor:
-                          currentThemeLight ? defaultLightColors[1] : null,
-                      textColor:
-                          currentThemeLight ? defaultLightColors[1] : null,
-                    ),
-                  ],
+            tabs: [
+              GButton(
+                icon: Icons.query_stats,
+                text: 'Статистика',
+                iconActiveColor:
+                    currentThemeLight ? defaultLightColors[1] : null,
+                textColor: currentThemeLight ? defaultLightColors[1] : null,
+              ),
+              GButton(
+                icon: Icons.home,
+                text: 'Задачи',
+                iconActiveColor:
+                    currentThemeLight ? defaultLightColors[1] : null,
+                textColor: currentThemeLight ? defaultLightColors[1] : null,
+              ),
+              GButton(
+                icon: Icons.settings,
+                text: 'Настройки',
+                iconActiveColor:
+                    currentThemeLight ? defaultLightColors[1] : null,
+                textColor: currentThemeLight ? defaultLightColors[1] : null,
+              ),
+            ],
             selectedIndex: selectedPage,
-            onTabChange: (index) => _mainPageViewController.jumpToPage(
-              index,
-            ),
+            onTabChange: (index) => _mainPageViewController.jumpToPage(index),
           ),
         ),
       ),

@@ -6,9 +6,15 @@ const ToDoDatabaseName = "ToDo";
 const SettingsDatabaseName = "Settings";
 const DatabasesPath = "~/.AppData/lister";
 
-double fontSize1 = 35.0;
-double fontSize2 = 30.0; // AppBarTitleSize
-double fontSize3 = 20.0; // OutlinedButtonTextSize
+double defaultFontSize1 = 10.0;
+double defaultFontSize2 = 10.0;
+double defaultFontSize3 = 10.0;
+
+double fontSize1 = defaultFontSize1;
+double fontSize2 = defaultFontSize2; // AppBarTitleSize
+double fontSize3 = defaultFontSize3; // OutlinedButtonTextSize
+
+double iconsBottomNavigationBarSize = 24.0;
 
 bool boolStats = true;
 
@@ -29,16 +35,16 @@ const Map<int, Color> defaultLightColors = {
 ThemeData mainThemeLight = ThemeData(
   brightness: Brightness.light,
   fontFamily: fontFamily,
-  scaffoldBackgroundColor: Color(0xFFEEEEEE),
-  accentColor: Color(0xFF474747),
+  scaffoldBackgroundColor: defaultLightColors[3],
+  accentColor: defaultLightColors[0],
   appBarTheme: AppBarTheme(
-    backgroundColor: Color(0xFF474747),
+    backgroundColor: defaultLightColors[0],
   ),
-  dialogBackgroundColor: Color(0xFFEEEEEE),
-  dividerColor: Color(0xFF474747),
+  dialogBackgroundColor: defaultLightColors[1],
+  dividerColor: defaultLightColors[0],
   textTheme: TextTheme(
     button: TextStyle(
-      color: Color(0xFF000000),
+      color: defaultLightColors[2],
     ),
   ),
 );
@@ -56,16 +62,16 @@ const Map<int, Color> defaultDarkColors = {
 ThemeData mainThemeDark = ThemeData(
   brightness: Brightness.dark,
   fontFamily: fontFamily,
-  scaffoldBackgroundColor: Color(0xFF353535),
-  accentColor: Color(0xFF212121),
+  scaffoldBackgroundColor: defaultDarkColors[1],
+  accentColor: defaultDarkColors[0],
   appBarTheme: AppBarTheme(
-    backgroundColor: Color(0xFF212121),
+    backgroundColor: defaultDarkColors[0],
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    backgroundColor: Color(0xFF212121),
+    backgroundColor: defaultDarkColors[0],
   ),
-  dialogBackgroundColor: Color(0xFF353535),
-  dividerColor: Color(0xFF212121),
+  dialogBackgroundColor: defaultDarkColors[1],
+  dividerColor: defaultDarkColors[0],
 );
 
 bool currentThemeLight = true;

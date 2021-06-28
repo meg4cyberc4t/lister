@@ -22,7 +22,7 @@ class _ThemesPageState extends State<ThemesPage> {
       appBar: AppBar(
         title: Text(
           'Тема',
-          style: TextStyle(fontSize: fontSize2),
+          style: TextStyle(fontSize: fontSize1),
         ),
         centerTitle: true,
       ),
@@ -98,22 +98,24 @@ class ThemesSettingsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.zero,
+      margin: EdgeInsets.zero,
       decoration: (active)
           ? BoxDecoration(
               border: Border.all(
-                  color:
-                      thisThemeLight ? Color(0xFF212121) : Color(0xFFFFFFFF)),
+                  color: thisThemeLight
+                      ? defaultLightColors[2]!
+                      : defaultDarkColors[2]!),
             )
           : BoxDecoration(),
       child: MaterialButton(
         onPressed: () => onPressed(),
-        height: 45,
+        height: 50,
         minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.all(10),
         child: Center(
           child: Text(
             title,
-            style: TextStyle(fontSize: fontSize3),
+            style: TextStyle(fontSize: fontSize2),
           ),
         ),
       ),

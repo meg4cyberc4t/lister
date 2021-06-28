@@ -22,7 +22,7 @@ class _VersionPageState extends State<VersionPage> {
       appBar: AppBar(
         title: Text(
           'Версия',
-          style: TextStyle(fontSize: fontSize2),
+          style: TextStyle(fontSize: fontSize1),
         ),
         centerTitle: true,
       ),
@@ -37,13 +37,25 @@ class _VersionPageState extends State<VersionPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Text('Версия ${snapshot.data} от 22.06.2021'),
+                        Text(
+                          'Версия ${snapshot.data} от 22.06.2021',
+                          style: TextStyle(fontSize: fontSize2),
+                          textAlign: TextAlign.center,
+                        ),
                         SizedBox(height: 20),
-                        Text('Открытый исходный код по ссылке:'),
+                        Text(
+                          'Открытый исходный код по ссылке:',
+                          style: TextStyle(fontSize: fontSize2),
+                          textAlign: TextAlign.center,
+                        ),
                         TextButton(
                           onPressed: () =>
                               launch('https://github.com/meg4cyberc4t/lister'),
-                          child: Text('github.com/meg4cyberc4t/lister'),
+                          child: Text(
+                            'https://github.com/meg4cyberc4t/lister',
+                            style: TextStyle(fontSize: fontSize2),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ],
                     )),

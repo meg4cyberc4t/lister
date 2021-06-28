@@ -17,9 +17,10 @@ Future<dynamic> correctionDialog({
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('Отчистить историю?',
+                  overflow: TextOverflow.fade,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: fontSize2,
+                    fontSize: fontSize1,
                   )),
               SizedBox(height: 10),
               Row(

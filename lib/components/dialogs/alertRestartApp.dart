@@ -16,12 +16,14 @@ Future<dynamic> alertRestartApp({
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('Внимание',
+                  overflow: TextOverflow.fade,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: fontSize2,
                   )),
               SizedBox(height: 10),
               Text('Для применения изменений перезапустите приложение!',
+                  overflow: TextOverflow.fade,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: fontSize3,

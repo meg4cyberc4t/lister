@@ -18,16 +18,17 @@ class MyOutlinedButton extends StatelessWidget {
       style: ButtonStyle(
         alignment: Alignment.center,
         overlayColor: MaterialStateProperty.all<Color>(
-            (currentThemeLight ? Color(0xFF212121) : Color(0xFFFFFFFF))
+            (currentThemeLight ? defaultLightColors[2]! : defaultDarkColors[2]!)
                 .withOpacity(0.1)),
       ),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Text(title,
             style: TextStyle(
-                fontSize: fontSize3,
-                color:
-                    currentThemeLight ? Color(0xFF212121) : Color(0xFFFFFFFF))),
+                fontSize: fontSize2,
+                color: currentThemeLight
+                    ? defaultLightColors[2]!
+                    : defaultDarkColors[2]!)),
       ),
     );
   }

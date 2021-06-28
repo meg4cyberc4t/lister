@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lister/components/FolderTitle.dart';
 import 'package:lister/components/MaterialButtonSettings.dart';
 import 'package:lister/components/controller.dart';
+import 'package:lister/components/dialogs/correctionDialog.dart';
 import 'package:lister/components/models/counters.dart';
 import 'package:lister/pages/settingsPages/developersPage.dart';
 import 'package:lister/pages/settingsPages/helpPage.dart';
@@ -18,7 +19,7 @@ class SettingsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Настройки',
-          style: TextStyle(fontSize: fontSize2),
+          style: TextStyle(fontSize: fontSize1),
         ),
         centerTitle: true,
       ),
@@ -33,6 +34,12 @@ class SettingsPage extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => ThemesPage(),
                 )),
+          ),
+          FolderTitle(title: 'Статистика'),
+          MaterialButtonSettings(
+            title: 'Отчистить историю',
+            onPressed: () =>
+                correctionDialog(context: context, setState: globalSetState),
           ),
           SizedBox(height: 10),
           FolderTitle(title: 'О сервисе'),

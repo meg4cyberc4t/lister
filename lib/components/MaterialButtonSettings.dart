@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../variables.dart';
+
 class MaterialButtonSettings extends StatelessWidget {
   MaterialButtonSettings({
     Key? key,
@@ -27,10 +29,7 @@ class MaterialButtonSettings extends StatelessWidget {
                     title,
                     textDirection: TextDirection.ltr,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width < 400
-                            ? MediaQuery.of(context).size.width / 16
-                            : 400 / 16),
+                    style: TextStyle(fontSize: fontSize2),
                   ),
                 ),
               ),
