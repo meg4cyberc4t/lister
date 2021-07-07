@@ -1,50 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'note.dart';
+part of 'subtask.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class NoteAdapter extends TypeAdapter<Note> {
+class SubtaskAdapter extends TypeAdapter<Subtask> {
   @override
-  final int typeId = 3;
+  final int typeId = 4;
 
   @override
-  Note read(BinaryReader reader) {
+  Subtask read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Note(
+    return Subtask(
       title: fields[0] as String,
       id: fields[1] as int,
-      createTime: fields[2] as DateTime,
-      deadline: fields[6] as DateTime?,
-      description: fields[3] as String?,
-      subtasks: (fields[4] as List).cast<dynamic>(),
-      lastSubtaskId: fields[5] as int,
+      check: fields[2] as bool,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Note obj) {
+  void write(BinaryWriter writer, Subtask obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
       ..write(obj.id)
       ..writeByte(2)
-      ..write(obj.createTime)
-      ..writeByte(3)
-      ..write(obj.description)
-      ..writeByte(4)
-      ..write(obj.subtasks)
-      ..writeByte(5)
-      ..write(obj.lastSubtaskId)
-      ..writeByte(6)
-      ..write(obj.deadline);
+      ..write(obj.check);
   }
 
   @override
@@ -53,7 +41,7 @@ class NoteAdapter extends TypeAdapter<Note> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Note &&
+      other is Subtask &&
           runtimeType == other.runtimeType &&
           typeId == this.typeId;
 }

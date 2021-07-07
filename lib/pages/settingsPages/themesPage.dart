@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lister/components/settingsController.dart';
+import 'package:lister/components/controllers/SettingsController.dart';
 import 'package:lister/variables.dart';
 
 class ThemesPage extends StatefulWidget {

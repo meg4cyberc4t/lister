@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lister/components/MyOutlinedButton.dart';
+import 'package:lister/components/myWidgets/MyOutlinedButton.dart';
 import 'package:lister/variables.dart';
 
 Future<dynamic> alertRestartApp({
@@ -34,7 +34,7 @@ Future<dynamic> alertRestartApp({
                 children: [
                   MyOutlinedButton(
                       title: 'Далее',
-                      submitFunction: () {
+                      onPressed: () {
                         SystemNavigator.pop();
                         Navigator.pop(context);
                       }),

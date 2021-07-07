@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:lister/components/MyOutlinedButton.dart';
-import 'package:lister/components/controller.dart';
+import 'package:lister/components/myWidgets/MyOutlinedButton.dart';
 import 'package:lister/variables.dart';
 
 Future<dynamic> correctionDialog({
   required BuildContext context,
   required Function setState,
+  required String title,
+  required Function submitFunction,
 }) {
   return showDialog(
       context: context,
@@ -16,7 +17,7 @@ Future<dynamic> correctionDialog({
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Отчистить историю?',
+              Text(title,
                   overflow: TextOverflow.fade,
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -28,14 +29,11 @@ Future<dynamic> correctionDialog({
                 children: [
                   MyOutlinedButton(
                     title: 'Нет',
-                    submitFunction: () => Navigator.of(context).pop(false),
+                    onPressed: () => Navigator.of(context).pop(false),
                   ),
                   MyOutlinedButton(
                     title: 'Да',
-                    submitFunction: () {
-                      setState(() => ListerController.clearStats());
-                      Navigator.of(context).pop(false);
-                    },
+                    onPressed: () => submitFunction(),
                   ),
                 ],
               )

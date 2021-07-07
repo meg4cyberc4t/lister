@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:lister/components/controller.dart';
-import 'package:lister/components/settingsController.dart';
+import 'package:lister/components/controllers/ListerController.dart';
+import 'package:lister/components/models/subtask.dart';
+import 'package:lister/components/controllers/SettingsController.dart';
 import 'package:lister/pages/homePage.dart';
 import 'package:lister/pages/settingsPage.dart';
 import 'package:lister/pages/statsPage.dart';
@@ -17,17 +18,14 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(CountersAdapter());
   Hive.registerAdapter(NoteAdapter());
+  Hive.registerAdapter(SubtaskAdapter());
   await SettingsController.initialize();
   await ListerController.initialize();
-  runApp(
-    Main(),
-  );
+  runApp(Main());
 }
 
 class Main extends StatefulWidget {
-  const Main({
-    Key? key,
-  }) : super(key: key);
+  const Main({Key? key}) : super(key: key);
 
   @override
   _MainState createState() => _MainState();

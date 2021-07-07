@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../variables.dart';
+import 'package:lister/variables.dart';
 
 class MaterialButtonSettings extends StatelessWidget {
   MaterialButtonSettings({

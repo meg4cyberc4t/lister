@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lister/components/controller.dart';
+import 'package:lister/components/controllers/ListerController.dart';
 import 'package:lister/variables.dart';
 import 'package:pie_chart/pie_chart.dart';
 

@@ -44,5 +44,7 @@ class CountersAdapter extends TypeAdapter<Counters> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Counters && runtimeType == other.runtimeType && typeId == 2;
+      other is Counters &&
+          runtimeType == other.runtimeType &&
+          typeId == this.typeId;
 }

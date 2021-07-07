@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lister/components/FolderTitle.dart';
-import 'package:lister/components/MaterialButtonSettings.dart';
-import 'package:lister/components/controller.dart';
+import 'package:lister/components/myWidgets/FolderTitle.dart';
+import 'package:lister/components/myWidgets/MaterialButtonSettings.dart';
+import 'package:lister/components/controllers/ListerController.dart';
 import 'package:lister/components/dialogs/correctionDialog.dart';
 import 'package:lister/components/models/counters.dart';
 import 'package:lister/pages/settingsPages/developersPage.dart';
@@ -38,8 +38,14 @@ class SettingsPage extends StatelessWidget {
           FolderTitle(title: 'Статистика'),
           MaterialButtonSettings(
             title: 'Отчистить историю',
-            onPressed: () =>
-                correctionDialog(context: context, setState: globalSetState),
+            onPressed: () => correctionDialog(
+                context: context,
+                setState: globalSetState,
+                title: 'Отчистить историю?',
+                submitFunction: () {
+                  globalSetState(() => ListerController.clearStats());
+                  Navigator.of(context).pop(false);
+                }),
           ),
           SizedBox(height: 10),
           FolderTitle(title: 'О сервисе'),

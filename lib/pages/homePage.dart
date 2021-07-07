@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lister/components/dialogs/createNoteDialog.dart';
-import 'package:lister/components/ElevatedFloatingActionButton.dart';
-import 'package:lister/components/controller.dart';
-import 'package:lister/components/dialogs/editNoteDialog.dart';
+import 'package:lister/components/myWidgets/ElevatedFloatingActionButton.dart';
+import 'package:lister/components/controllers/ListerController.dart';
 import 'package:lister/components/dialogs/infoNoteDialog.dart';
 import 'package:lister/variables.dart';
 import 'package:flutter/cupertino.dart';
@@ -78,6 +77,11 @@ class _TableToDoState extends State<TableToDo> {
         SlidableController(onSlideAnimationChanged: (value) {
       if (value == null) fatherSetState(() {});
     });
+    int subtasksAll = ListerController.databaseNotes[widget.id].subtasks.length;
+    int subtasksCheck = 0;
+    for (var subtask in ListerController.databaseNotes[widget.id].subtasks) {
+      if (subtask.check) subtasksCheck += 1;
+    }
     return Slidable.builder(
       key: Key(widget.title),
       enabled: true,
@@ -134,33 +138,49 @@ class _TableToDoState extends State<TableToDo> {
                 icon: Icons.delete,
               )),
       child: MaterialButton(
+        padding: EdgeInsets.zero,
+        height: 50,
         color:
             currentThemeLight ? defaultLightColors[1]! : defaultDarkColors[1]!,
-        onPressed: () => infoNoteDialog(context, widget.id),
-        onLongPress: () => editNoteDialog(context, fatherSetState, widget.id),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 8.0),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: Text(
-                      widget.title,
-                      overflow: TextOverflow.clip,
-                      textDirection: TextDirection.ltr,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: fontSize2),
-                    ),
-                  ),
-                ),
-              ],
+        onPressed: () => infoNoteDialog(context, fatherSetState, widget.id),
+        child: Container(
+          height: 50,
+          child: Stack(children: [
+            Center(
+              child: Text(
+                widget.title,
+                overflow: TextOverflow.clip,
+                textDirection: TextDirection.ltr,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: fontSize2),
+              ),
             ),
-          ],
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        if (ListerController
+                            .databaseNotes[widget.id].description.isNotEmpty)
+                          Icon(Icons.description, size: 10),
+                        if (ListerController
+                                .databaseNotes[widget.id].deadline !=
+                            null)
+                          Icon(Icons.timer_outlined, size: 10),
+                      ],
+                    ),
+                    if (ListerController
+                        .databaseNotes[widget.id].subtasks.isNotEmpty)
+                      Text('$subtasksCheck/$subtasksAll',
+                          style: TextStyle(fontSize: 10)),
+                  ],
+                )
+              ],
+            )
+          ]),
         ),
       ),
     );

@@ -23,11 +23,6 @@ class SettingsController {
 
   static void setFontFromScreenWidth(Size contextSize) {
     double widthScreen = contextSize.width;
-    double heightScreen = contextSize.height;
-    print('widthScreen');
-    print(widthScreen);
-    print('heightScreen');
-    print(heightScreen);
     if (widthScreen < 400) {
       fontSize1 = widthScreen / 13;
       fontSize2 = widthScreen / 17;
