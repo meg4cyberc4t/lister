@@ -1,79 +1,138 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-const ToDoDatabaseName = "ToDo";
-const SettingsDatabaseName = "Settings";
-const DatabasesPath = "~/.AppData/lister";
-
-double defaultFontSize1 = 10.0;
-double defaultFontSize2 = 10.0;
-double defaultFontSize3 = 10.0;
-
-double fontSize1 = defaultFontSize1;
-double fontSize2 = defaultFontSize2; // AppBarTitleSize
-double fontSize3 = defaultFontSize3; // OutlinedButtonTextSize
-
-double iconsBottomNavigationBarSize = 24.0;
-
-bool boolStats = true;
-
-String themeSettings = 'system';
-
-const String fontFamily = 'Montserrat';
-
-const Map<int, Color> defaultLightColors = {
-  0: Color(0xFF474747), // activeColorPrimary
-  1: Color(0xFFEEEEEE), // backgroundColor
-  2: Color(0xFF212121), // setTextColor
-  3: Color(0xFFEEEEEE), // inactiveColorPrimary
-  4: Color(0xFFFF534A), // colorDeletes
-  5: Color(0xFFEFEF86), // colorMoments
-  6: Color(0xFF46CF68), // colorDones
+const Map<String, double> fontSize = {
+  'Middle': 28.0, // fontSize['Middle']
+  'MiniMiddle': 23.5, // fontSize['MiniMiddle']
+  'Small': 17.5,
+  'Mini': 15.0,
 };
 
-ThemeData mainThemeLight = ThemeData(
-  brightness: Brightness.light,
-  fontFamily: fontFamily,
-  scaffoldBackgroundColor: defaultLightColors[3],
-  accentColor: defaultLightColors[0],
-  appBarTheme: AppBarTheme(
-    backgroundColor: defaultLightColors[0],
-  ),
-  dialogBackgroundColor: defaultLightColors[1],
-  dividerColor: defaultLightColors[0],
-  textTheme: TextTheme(
-    button: TextStyle(
-      color: defaultLightColors[2],
+const Map<String, Color> themeDataLightColors = {
+  'Main': Color(0xFF3f3f40), // themeDataLightColors['Main']
+  'Secondary': Color(0xFFF2F2F3), // themeDataLightColors['Secondary']
+  'Accent': Color(0xFF2B2B2C), // themeDataLightColors['Accent']
+};
+
+const Duration DataDuration = Duration(milliseconds: 500);
+
+const String FontFamily = 'Montserrat';
+
+ThemeData themeDataLight = ThemeData(
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: themeDataLightColors['Accent']),
+    fontFamily: FontFamily,
+    primaryColor: themeDataLightColors['Main'],
+    backgroundColor: themeDataLightColors['Secondary'],
+    dialogBackgroundColor: themeDataLightColors['Secondary'],
+    scaffoldBackgroundColor: themeDataLightColors['Secondary'],
+    bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: themeDataLightColors['Secondary']),
+    accentColor: themeDataLightColors['Accent'],
+    secondaryHeaderColor: themeDataLightColors['Secondary'],
+    iconTheme: IconThemeData(color: themeDataLightColors['Main']),
+    appBarTheme: AppBarTheme(
+        centerTitle: true,
+        backgroundColor: themeDataLightColors['Accent'],
+        foregroundColor: themeDataLightColors['Accent'],
+        titleTextStyle: TextStyle(
+            fontSize: fontSize['Middle'],
+            color: themeDataLightColors['Secondary'])),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ButtonStyle(
+        textStyle: MaterialStateProperty.all(
+            TextStyle(fontSize: fontSize['Small'], fontFamily: FontFamily)),
+        foregroundColor:
+            MaterialStateProperty.all(themeDataLightColors['Accent']),
+        overlayColor: MaterialStateProperty.all(
+            themeDataLightColors['Accent']!.withOpacity(0.2)),
+        animationDuration: DataDuration,
+        alignment: Alignment.center,
+        padding: MaterialStateProperty.all(EdgeInsets.zero),
+      ),
     ),
-  ),
-);
+    inputDecorationTheme: InputDecorationTheme(
+        alignLabelWithHint: true,
+        contentPadding: EdgeInsets.all(3),
+        focusedBorder: OutlineInputBorder(
+            borderSide:
+                BorderSide(color: themeDataLightColors['Main']!, width: 1),
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+        border: OutlineInputBorder(
+            borderSide:
+                BorderSide(color: themeDataLightColors['Main']!, width: 0),
+            borderRadius: BorderRadius.all(Radius.circular(10)))),
+    textTheme: TextTheme(
+      headline1: TextStyle(color: themeDataLightColors['Accent']),
+      headline2: TextStyle(color: themeDataLightColors['Accent']),
+      headline3: TextStyle(color: themeDataLightColors['Accent']),
+      headline4: TextStyle(color: themeDataLightColors['Accent']),
+      headline5: TextStyle(color: themeDataLightColors['Accent']),
+      headline6: TextStyle(color: themeDataLightColors['Accent']),
+      subtitle1: TextStyle(color: themeDataLightColors['Accent']),
+      subtitle2: TextStyle(color: themeDataLightColors['Accent']),
+      bodyText1: TextStyle(color: themeDataLightColors['Accent']),
+      bodyText2: TextStyle(color: themeDataLightColors['Accent']),
+    ));
 
-const Map<int, Color> defaultDarkColors = {
-  0: Color(0xFF212121), // activeColorPrimary
-  1: Color(0xFF353535), // backgroundColorw
-  2: Color(0xFFFFFFFF), // setTextColor
-  3: Color(0xFF8E8E93), // inactiveColorPrimary
-  4: Color(0xFFFF3B30), // colorDeletes
-  5: Color(0xFFD1D1D6), // colorMoments
-  6: Color(0xFF34C759), // colorDones
+const Map<String, Color> themeDataDarkColors = {
+  'Main': Color(0xFFF2F2F3), // themeDataLightColors['Main']
+  'Secondary': Color(0xFF3f3f40), // themeDataLightColors['Secondary']
+  'Accent': Color(0xFF2B2B2C), // themeDataLightColors['Accent']
 };
 
-ThemeData mainThemeDark = ThemeData(
-  brightness: Brightness.dark,
-  fontFamily: fontFamily,
-  scaffoldBackgroundColor: defaultDarkColors[1],
-  accentColor: defaultDarkColors[0],
-  appBarTheme: AppBarTheme(
-    backgroundColor: defaultDarkColors[0],
-  ),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    backgroundColor: defaultDarkColors[0],
-  ),
-  dialogBackgroundColor: defaultDarkColors[1],
-  dividerColor: defaultDarkColors[0],
-);
-
-bool currentThemeLight = true;
-
-Function globalSetState = () {};
+ThemeData themeDataDark = ThemeData(
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: themeDataDarkColors['Accent']),
+    fontFamily: FontFamily,
+    primaryColor: themeDataDarkColors['Main'],
+    backgroundColor: themeDataDarkColors['Secondary'],
+    dialogBackgroundColor: themeDataDarkColors['Secondary'],
+    scaffoldBackgroundColor: themeDataDarkColors['Secondary'],
+    bottomSheetTheme:
+        BottomSheetThemeData(backgroundColor: themeDataDarkColors['Secondary']),
+    accentColor: themeDataDarkColors['Main'],
+    secondaryHeaderColor: themeDataDarkColors['Secondary'],
+    appBarTheme: AppBarTheme(
+        centerTitle: true,
+        backgroundColor: themeDataDarkColors['Accent'],
+        foregroundColor: themeDataDarkColors['Accent'],
+        titleTextStyle: TextStyle(
+            fontSize: fontSize['Middle'], color: themeDataDarkColors['Main'])),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ButtonStyle(
+        textStyle: MaterialStateProperty.all(
+            TextStyle(fontSize: fontSize['Small'], fontFamily: FontFamily)),
+        foregroundColor: MaterialStateProperty.all(themeDataDarkColors['Main']),
+        overlayColor: MaterialStateProperty.all(
+            themeDataDarkColors['Accent']!.withOpacity(0.2)),
+        animationDuration: DataDuration,
+        alignment: Alignment.center,
+        padding: MaterialStateProperty.all(EdgeInsets.zero),
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+        alignLabelWithHint: true,
+        hintStyle:
+            TextStyle(color: themeDataDarkColors['Main']!.withOpacity(0.5)),
+        contentPadding: EdgeInsets.all(3),
+        focusedBorder: OutlineInputBorder(
+            borderSide:
+                BorderSide(color: themeDataDarkColors['Main']!, width: 1),
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+        border: OutlineInputBorder(
+            borderSide:
+                BorderSide(color: themeDataDarkColors['Main']!, width: 0),
+            borderRadius: BorderRadius.all(Radius.circular(10)))),
+    iconTheme: IconThemeData(color: themeDataDarkColors['Main']),
+    textTheme: TextTheme(
+      headline1: TextStyle(color: themeDataDarkColors['Main']),
+      headline2: TextStyle(color: themeDataDarkColors['Main']),
+      headline3: TextStyle(color: themeDataDarkColors['Main']),
+      headline4: TextStyle(color: themeDataDarkColors['Main']),
+      headline5: TextStyle(color: themeDataDarkColors['Main']),
+      headline6: TextStyle(color: themeDataDarkColors['Main']),
+      subtitle1: TextStyle(color: themeDataDarkColors['Main']),
+      subtitle2: TextStyle(color: themeDataDarkColors['Main']),
+      bodyText1: TextStyle(color: themeDataDarkColors['Main']),
+      bodyText2: TextStyle(color: themeDataDarkColors['Main']),
+    ));
