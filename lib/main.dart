@@ -3,17 +3,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:lister/controllers/HiveController.dart';
-import 'package:lister/createDialogs/showDeadlineCreateDialog.dart';
-import 'package:lister/createDialogs/showDescriptionCreateDialog.dart';
-import 'package:lister/createDialogs/showSubtasksCreateDialog.dart';
-import 'package:lister/models/ListBloc.dart';
-import 'package:lister/models/createNoteForButtonsBloc.dart';
-import 'package:lister/models/note.dart';
-import 'package:lister/otherComponents/hints.dart';
+import 'package:lister/architecture/HiveController.dart';
+import 'package:lister/architecture/TextFieldHintGenerator.dart';
+import 'package:lister/architecture/note.dart';
+import 'package:lister/architecture/BLoCmodels/listBLoC.dart';
+import 'package:lister/architecture/BLoCmodels/createNoteForButtonsBLoC.dart';
+import 'package:lister/dialogs/showSubtasksCreateDialog.dart';
+import 'package:lister/dialogs/showTextEditDialog.dart';
+import 'package:lister/pages/InfoNotePage.dart';
+
 import 'package:lister/widgets/MyElevatedActionButton.dart';
 import 'package:flutter/services.dart';
-import 'package:lister/variables.dart';
+import 'package:lister/architecture/themeSettings.dart';
+
+import 'Dialogs/showDeadlineCreateDialog.dart';
 
 void main() async {
   await HiveController.initialize();
@@ -48,14 +51,36 @@ class HomePage extends StatelessWidget {
 
   Widget _buildListTile(Animation<double> animation, int position, Note note,
       BuildContext context, GlobalKey<AnimatedListState> _listKey) {
+    int taskCheck = 0;
+    note.subtasks.forEach((element) {
+      if (element[1]) taskCheck++;
+    });
     return FadeTransition(
       opacity: animation,
       child: Dismissible(
         movementDuration: DataDuration,
         resizeDuration: DataDuration,
         key: Key(position.toString()),
-        background: Container(color: Colors.green),
-        secondaryBackground: Container(color: Colors.red),
+        background: Container(
+          color: Colors.green,
+          child: Row(children: [
+            SizedBox(width: 20),
+            Icon(
+              Icons.check,
+              color: Theme.of(context).secondaryHeaderColor,
+            )
+          ]),
+        ),
+        secondaryBackground: Container(
+          color: Colors.red,
+          child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+            Icon(
+              Icons.delete,
+              color: Theme.of(context).secondaryHeaderColor,
+            ),
+            SizedBox(width: 20)
+          ]),
+        ),
         direction: DismissDirection.horizontal,
         onDismissed: (direction) {
           _listKey.currentState!.removeItem(
@@ -69,21 +94,28 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
+              onTap: () async {
+                await Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return InfoNotePage(note: note, position: position);
+                }));
+                BlocProvider.of<ListBloc>(context).add(ReloadDatabase());
+              },
               title: Text(
                 note.title,
+                textAlign: TextAlign.left,
               ),
               subtitle: (note.description.isNotEmpty)
                   ? Text(
                       note.description,
+                      textAlign: TextAlign.left,
                       style: TextStyle(
                           color:
                               Theme.of(context).primaryColor.withOpacity(0.75)),
                     )
                   : null,
               trailing: (note.deadline != null || note.subtasks.isNotEmpty)
-                  ? Container(
-                      height: 100,
-                      width: 100,
+                  ? FittedBox(
                       child: Column(
                         children: [
                           if (note.subtasks.isNotEmpty)
@@ -97,14 +129,26 @@ class HomePage extends StatelessWidget {
                                   color: Theme.of(context).accentColor,
                                 ),
                                 SizedBox(width: 1),
-                                Text(note.subtasks.length.toString()),
+                                Text(
+                                  "$taskCheck/${note.subtasks.length}",
+                                  textAlign: TextAlign.end,
+                                ),
                               ],
                             )
                           else
                             Container(),
                           if (note.deadline != null)
-                            Text(DateFormat('H:mm yyyy.MM.dd')
-                                .format(note.deadline!))
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  DateFormat('H:mm yyyy.MM.dd')
+                                      .format(note.deadline!),
+                                  textAlign: TextAlign.end,
+                                ),
+                              ],
+                            )
                           else
                             Container(),
                         ],
@@ -124,18 +168,18 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  void _removeListTile({
-    required int index,
-    required BuildContext context,
-    required Note note,
-    required GlobalKey<AnimatedListState> listKey,
-  }) {
-    BlocProvider.of<ListBloc>(context).add(RemoveNoteAt(position: index));
-    listKey.currentState!.removeItem(
-        index,
-        (context, animation) =>
-            _buildListTile(animation, index, note, context, listKey));
-  }
+  // void _removeListTile({
+  //   required int index,
+  //   required BuildContext context,
+  //   required Note note,
+  //   required GlobalKey<AnimatedListState> listKey,
+  // }) {
+  //   BlocProvider.of<ListBloc>(context).add(RemoveNoteAt(position: index));
+  //   listKey.currentState!.removeItem(
+  //       index,
+  //       (context, animation) =>
+  //           _buildListTile(animation, index, note, context, listKey));
+  // }
 
   void _addListTile({
     required int index,
@@ -159,7 +203,7 @@ class HomePage extends StatelessWidget {
             floatingActionButton: ElevatedFloatingActionButton(
               title: 'Создать',
               onPressed: () {
-                String _hintText = Hint.get();
+                String _hintText = TextFieldHintGenerator.generate;
                 showModalBottomSheetCreateNote(context, _hintText, mainList);
               },
             ),
@@ -167,6 +211,7 @@ class HomePage extends StatelessWidget {
               title: Text(
                 'Задачи',
                 style: Theme.of(context).appBarTheme.titleTextStyle,
+                textAlign: TextAlign.center,
               ),
             ),
             body: AnimatedList(
@@ -211,8 +256,11 @@ class HomePage extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(children: [
-                    Text('Создание задачи',
-                        style: TextStyle(fontSize: fontSize['MiniMiddle'])),
+                    Text(
+                      'Создание задачи',
+                      style: TextStyle(fontSize: fontSize['MiniMiddle']),
+                      textAlign: TextAlign.center,
+                    ),
                     SizedBox(height: 10),
                     TextFormField(
                       autocorrect: true,
@@ -282,11 +330,12 @@ class HomePage extends StatelessWidget {
                                         : Theme.of(context).primaryColor,
                                   ),
                                   onPressed: () async {
-                                    description =
-                                        (await showDescriptionCreateDialog(
-                                                    context, description) ??
-                                                '')
-                                            .trim();
+                                    description = (await showTextEditDialog(
+                                                context,
+                                                'Описание',
+                                                description) ??
+                                            '')
+                                        .trim();
                                     if (description.isNotEmpty) {
                                       BlocProvider.of<CreateNoteForButtonsBloc>(
                                               bottomSheetContext)
@@ -340,7 +389,10 @@ class HomePage extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: OutlinedButton(
-                                  child: Text('Далее'),
+                                  child: Text(
+                                    'Далее',
+                                    textAlign: TextAlign.center,
+                                  ),
                                   onPressed: () {
                                     String title =
                                         _textEditingController.text.trim();

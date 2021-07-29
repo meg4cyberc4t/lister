@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lister/variables.dart';
+import 'package:lister/architecture/themeSettings.dart';
 
-Future<String?> showDescriptionCreateDialog(
-    BuildContext context, String initialValue) {
+Future<String?> showTextEditDialog(
+    BuildContext context, String title, String initialValue) {
   TextEditingController _textEditingController =
       TextEditingController(text: initialValue);
   return showGeneralDialog(
@@ -23,8 +23,11 @@ Future<String?> showDescriptionCreateDialog(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Описание',
-                  style: TextStyle(fontSize: fontSize['MiniMiddle'])),
+              Text(
+                title,
+                style: TextStyle(fontSize: fontSize['MiniMiddle']),
+                textAlign: TextAlign.center,
+              ),
               SizedBox(height: 10),
               TextFormField(
                 controller: _textEditingController,
@@ -41,7 +44,10 @@ Future<String?> showDescriptionCreateDialog(
                 children: [
                   Expanded(
                     child: OutlinedButton(
-                      child: Text('Отчистить'),
+                      child: Text(
+                        'Отчистить',
+                        textAlign: TextAlign.center,
+                      ),
                       onPressed: () {
                         Navigator.pop(context, ' ');
                       },
@@ -50,7 +56,10 @@ Future<String?> showDescriptionCreateDialog(
                   SizedBox(width: 10),
                   Expanded(
                     child: OutlinedButton(
-                      child: Text('Далее'),
+                      child: Text(
+                        'Далее',
+                        textAlign: TextAlign.center,
+                      ),
                       onPressed: () {
                         Navigator.pop(context, _textEditingController.text);
                       },

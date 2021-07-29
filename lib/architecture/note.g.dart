@@ -47,5 +47,7 @@ class NoteAdapter extends TypeAdapter<Note> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Note && runtimeType == other.runtimeType && typeId == 0;
+      other is Note &&
+          runtimeType == other.runtimeType &&
+          typeId == this.typeId;
 }

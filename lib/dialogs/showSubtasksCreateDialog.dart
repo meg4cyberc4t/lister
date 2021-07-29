@@ -1,12 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:lister/variables.dart';
+import 'package:lister/architecture/themeSettings.dart';
 
 Future<List?> showSubtasksCreateDialog(BuildContext context, List subtasks) {
   final GlobalKey<AnimatedListState> listSubtaskKey = GlobalKey();
 
   List<TextEditingController> controllers = [];
-  for (var subtaskTitle in subtasks)
-    controllers.add(TextEditingController(text: subtaskTitle));
+  for (var subtask in subtasks)
+    controllers.add(TextEditingController(text: subtask[0]));
   return showGeneralDialog(
     context: context,
     transitionDuration: DataDuration,
@@ -49,8 +51,11 @@ class _DialogWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Подзадачи',
-                      style: TextStyle(fontSize: fontSize['MiniMiddle'])),
+                  Text(
+                    'Подзадачи',
+                    style: TextStyle(fontSize: fontSize['MiniMiddle']),
+                    textAlign: TextAlign.center,
+                  ),
                   SizedBox(height: 10),
                   Container(
                     width: double.maxFinite,
@@ -81,6 +86,7 @@ class _DialogWidget extends StatelessWidget {
                                 Text(
                                   'Добавить',
                                   style: TextStyle(fontSize: fontSize['Small']),
+                                  textAlign: TextAlign.center,
                                 ),
                               ],
                             ),
@@ -107,6 +113,7 @@ class _DialogWidget extends StatelessWidget {
                                 Text(
                                   'Убрать',
                                   style: TextStyle(fontSize: fontSize['Small']),
+                                  textAlign: TextAlign.center,
                                 ),
                               ],
                             ),
@@ -121,7 +128,10 @@ class _DialogWidget extends StatelessWidget {
                     children: [
                       Expanded(
                         child: OutlinedButton(
-                          child: Text('Отчистить'),
+                          child: Text(
+                            'Отчистить',
+                            textAlign: TextAlign.center,
+                          ),
                           onPressed: () {
                             Navigator.pop(context, []);
                           },
@@ -130,13 +140,20 @@ class _DialogWidget extends StatelessWidget {
                       SizedBox(width: 10),
                       Expanded(
                         child: OutlinedButton(
-                          child: Text('Далее'),
+                          child: Text(
+                            'Далее',
+                            textAlign: TextAlign.center,
+                          ),
                           onPressed: () {
                             subtasks = [];
                             for (var controller in controllers) {
                               String textController = controller.text.trim();
                               if (textController.isNotEmpty)
-                                subtasks.add(controller.text);
+                                subtasks.add([
+                                  controller.text,
+                                  false,
+                                  new Random().nextInt(10000000)
+                                ]);
                             }
                             Navigator.pop(context, subtasks);
                           },
@@ -178,7 +195,12 @@ class _DialogWidget extends StatelessWidget {
             Container(),
             Row(
               children: [
-                Expanded(child: Center(child: Text((index + 1).toString()))),
+                Expanded(
+                    child: Center(
+                        child: Text(
+                  (index + 1).toString(),
+                  textAlign: TextAlign.center,
+                ))),
                 Expanded(
                   flex: 7,
                   child: TextFormField(

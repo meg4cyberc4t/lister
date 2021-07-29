@@ -11,13 +11,16 @@ const Map<String, Color> themeDataLightColors = {
   'Main': Color(0xFF3f3f40), // themeDataLightColors['Main']
   'Secondary': Color(0xFFF2F2F3), // themeDataLightColors['Secondary']
   'Accent': Color(0xFF2B2B2C), // themeDataLightColors['Accent']
+  'InActive': Color(0xFF757575),
 };
 
 const Duration DataDuration = Duration(milliseconds: 500);
 
 const String FontFamily = 'Montserrat';
-
 ThemeData themeDataLight = ThemeData(
+    checkboxTheme: CheckboxThemeData(
+        fillColor: MaterialStateProperty.resolveWith(
+            (Set<MaterialState> states) => themeDataLightColors['Main'])),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: themeDataLightColors['Accent']),
     fontFamily: FontFamily,
@@ -32,6 +35,7 @@ ThemeData themeDataLight = ThemeData(
     iconTheme: IconThemeData(color: themeDataLightColors['Main']),
     appBarTheme: AppBarTheme(
         centerTitle: true,
+        iconTheme: IconThemeData(color: themeDataLightColors['Secondary']),
         backgroundColor: themeDataLightColors['Accent'],
         foregroundColor: themeDataLightColors['Accent'],
         titleTextStyle: TextStyle(
@@ -78,9 +82,13 @@ const Map<String, Color> themeDataDarkColors = {
   'Main': Color(0xFFF2F2F3), // themeDataLightColors['Main']
   'Secondary': Color(0xFF3f3f40), // themeDataLightColors['Secondary']
   'Accent': Color(0xFF2B2B2C), // themeDataLightColors['Accent']
+  'InActive': Color(0xFF757575),
 };
 
 ThemeData themeDataDark = ThemeData(
+    checkboxTheme: CheckboxThemeData(
+        fillColor: MaterialStateProperty.resolveWith(
+            (Set<MaterialState> states) => themeDataDarkColors['Main'])),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: themeDataDarkColors['Accent']),
     fontFamily: FontFamily,
@@ -93,6 +101,7 @@ ThemeData themeDataDark = ThemeData(
     accentColor: themeDataDarkColors['Main'],
     secondaryHeaderColor: themeDataDarkColors['Secondary'],
     appBarTheme: AppBarTheme(
+        iconTheme: IconThemeData(color: themeDataDarkColors['Main']),
         centerTitle: true,
         backgroundColor: themeDataDarkColors['Accent'],
         foregroundColor: themeDataDarkColors['Accent'],

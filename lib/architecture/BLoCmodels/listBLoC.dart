@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lister/controllers/HiveController.dart';
-import 'package:lister/models/note.dart';
+import 'package:lister/architecture/HiveController.dart';
+import 'package:lister/architecture/note.dart';
 
 class ListBloc extends Bloc<dynamic, List> {
   List thisList;
@@ -17,9 +17,14 @@ class ListBloc extends Bloc<dynamic, List> {
       if (thisList.contains(event.note)) thisList.remove(event.note);
     } else if (event is RemoveNoteAt) {
       thisList.removeAt(event.position);
+    } else if (event is ReloadDatabase) {
+      thisList = HiveController.getMainList();
     }
     HiveController.saveMainList(thisList);
-    yield thisList.toList();
+    if (event is ReloadDatabase)
+      yield HiveController.getMainList();
+    else
+      yield thisList.toList();
   }
 }
 
@@ -37,3 +42,5 @@ class RemoveNoteAt {
   RemoveNoteAt({required this.position});
   final int position;
 }
+
+class ReloadDatabase {}

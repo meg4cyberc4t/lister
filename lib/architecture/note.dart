@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 
 part 'note.g.dart';
@@ -23,13 +22,17 @@ class Note extends HiveObject with EquatableMixin {
     DateTime? deadline,
     String? description,
     List? subtasks,
-  }) =>
-      Note(
-          createTime: createTime ?? this.createTime,
-          title: title ?? this.title,
-          deadline: deadline ?? this.deadline,
-          description: description ?? this.description,
-          subtasks: subtasks ?? this.subtasks);
+    List? completedSubtasks,
+    bool deadlineAvailable = false,
+  }) {
+    return Note(
+      createTime: createTime ?? this.createTime,
+      title: title ?? this.title,
+      deadline: deadlineAvailable ? deadline : deadline ?? this.deadline,
+      description: description ?? this.description,
+      subtasks: subtasks ?? this.subtasks,
+    );
+  }
 
   Note({
     required this.title,
@@ -42,17 +45,4 @@ class Note extends HiveObject with EquatableMixin {
   @override
   List<Object?> get props =>
       [createTime, title, deadline, description, subtasks];
-}
-
-class NoteBloc extends Bloc<Note, Note> {
-  Note thisNote;
-  NoteBloc(initialState)
-      : thisNote = initialState,
-        super(initialState);
-
-  @override
-  Stream<Note> mapEventToState(Note newNote) async* {
-    thisNote = newNote.copyWith();
-    yield thisNote;
-  }
 }

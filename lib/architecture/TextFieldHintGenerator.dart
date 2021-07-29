@@ -1,7 +1,7 @@
 import 'dart:math';
 
-class Hint {
-  static String get() => allHints[new Random().nextInt(allHints.length)];
+class TextFieldHintGenerator {
+  static String get generate => allHints[new Random().nextInt(allHints.length)];
 
   static const List allHints = [
     'Помыть посуду',

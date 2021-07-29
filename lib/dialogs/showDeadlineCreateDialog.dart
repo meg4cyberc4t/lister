@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:lister/models/createDeadlineBloc.dart';
-import 'package:lister/variables.dart';
+import 'package:lister/architecture/BLoCmodels/createDeadlineBLoC.dart';
+import 'package:lister/architecture/themeSettings.dart';
 
 Future<DateTime?> showDeadlineCreateDialog(
     BuildContext context, DateTime? initialValue) {
@@ -30,8 +30,11 @@ Future<DateTime?> showDeadlineCreateDialog(
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text('Время завершения',
-                          style: TextStyle(fontSize: fontSize['MiniMiddle'])),
+                      Text(
+                        'Время завершения',
+                        style: TextStyle(fontSize: fontSize['MiniMiddle']),
+                        textAlign: TextAlign.center,
+                      ),
                       SizedBox(height: 10),
                       AnimatedContainer(
                           duration: Duration(seconds: 1),
@@ -84,7 +87,9 @@ Future<DateTime?> showDeadlineCreateDialog(
                             flex: 2,
                             child: OutlinedButton(
                               child: Text(
-                                  DateFormat('H:mm').format(selectedDateTime)),
+                                DateFormat('H:mm').format(selectedDateTime),
+                                textAlign: TextAlign.center,
+                              ),
                               onPressed: () async {
                                 TimeOfDay? pickedTime = await showTimePicker(
                                   context: context,
@@ -106,8 +111,11 @@ Future<DateTime?> showDeadlineCreateDialog(
                           Expanded(
                             flex: 3,
                             child: OutlinedButton(
-                              child: Text(DateFormat('yyyy.MM.dd')
-                                  .format(selectedDateTime)),
+                              child: Text(
+                                DateFormat('yyyy.MM.dd')
+                                    .format(selectedDateTime),
+                                textAlign: TextAlign.center,
+                              ),
                               onPressed: () async {
                                 DateTime? pickedDate = await showDatePicker(
                                     context: context,
@@ -133,7 +141,10 @@ Future<DateTime?> showDeadlineCreateDialog(
                         children: [
                           Expanded(
                             child: OutlinedButton(
-                              child: Text('Отчистить'),
+                              child: Text(
+                                'Отчистить',
+                                textAlign: TextAlign.center,
+                              ),
                               onPressed: () {
                                 Navigator.pop(context, null);
                               },
@@ -142,7 +153,10 @@ Future<DateTime?> showDeadlineCreateDialog(
                           SizedBox(width: 10),
                           Expanded(
                             child: OutlinedButton(
-                              child: Text('Далее'),
+                              child: Text(
+                                'Далее',
+                                textAlign: TextAlign.center,
+                              ),
                               onPressed: () {
                                 Navigator.pop(context, selectedDateTime);
                               },
